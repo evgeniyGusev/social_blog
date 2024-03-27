@@ -1,3 +1,8 @@
 <template>
-  <header>This is the Header -> Это заголовок</header>
+  <header class="header">This is the Header -> Это заголовок</header>
 </template>
+
+<style scoped lang="scss">
+.header {
+}
+</style>
