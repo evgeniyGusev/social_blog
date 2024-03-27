@@ -1,7 +1,7 @@
 <template>
-  <MainCard />
+  <TheHeader />
 </template>
 
 <script setup lang="ts">
-import MainCard from '@/components/MainCard.vue';
+import TheHeader from '@/components/TheHeader.vue';
 </script>
