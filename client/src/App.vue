@@ -137,8 +137,6 @@
     harum id ipsam laborum, nam obcaecati qui sapiente vitae! Ad consectetur corporis dolore est fuga impedit, minima
     molestias mollitia perspiciatis qui quis similique. Alias assumenda deleniti dolor? Ex hic iusto laborum natus, non
     pariatur repellat similique. Asperiores blanditiis error expedita fugiat ipsam minus nesciunt perferendis quisquam
-    <h1 class="to-animate-1 to-remove-animate">Я ПОЯВИЛСЯ ЧЕРЕЗ АБСОРВЕР!!</h1>
-
     reiciendis, saepe sequi velit. Accusantium alias dolores ipsam labore, libero maxime minima numquam omnis optio
     pariatur quam sed tempore tenetur ut voluptatibus. A ad amet asperiores, atque consectetur deserunt dolore doloribus
     ea eos error et eum ex excepturi facere incidunt, itaque libero minus nam nemo possimus praesentium quae qui
@@ -177,17 +175,5 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-
-import { setIntersectionObserver } from '@/helpers/observers.ts';
-
 import TheHeader from '@/components/TheHeader.vue';
-
-onMounted(() => {
-  const observer = setIntersectionObserver({ threshold: 0.5 });
-
-  if (observer) {
-    observer.observe(document.querySelector('.to-animate-1') as Element);
-  }
-});
 </script>
