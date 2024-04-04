@@ -2,12 +2,15 @@
   <header class="header">
     <div class="main-container">
       <MainLogo />
+
+      <UserHeaderState />
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
 import MainLogo from '@/assets/icons/full_logo.svg?component';
+import UserHeaderState from '@/components/layouts/common/header/UserHeaderState.vue';
 </script>
 
 <style scoped lang="scss">

@@ -1,12 +1,12 @@
 <template>
   <CommonHeader />
-  <main class="main-container" style="height: 3000px">
+  <main class="main-container">
     <slot></slot>
   </main>
   <CommonFooter />
 </template>
 
 <script setup lang="ts">
-import CommonHeader from '@/components/layouts/common/CommonHeader.vue';
-import CommonFooter from '@/components/layouts/common/CommonFooter.vue';
+import CommonHeader from '@/components/layouts/common/header/CommonHeader.vue';
+import CommonFooter from '@/components/layouts/common/footer/CommonFooter.vue';
 </script>

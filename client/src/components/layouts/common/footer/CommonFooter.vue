@@ -6,4 +6,10 @@
 
 <script setup lang="ts"></script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.footer {
+  padding: 0.75rem 0;
+  border-top: 1px solid $color-secondary;
+  background-color: #fff;
+}
+</style>
