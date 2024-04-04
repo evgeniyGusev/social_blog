@@ -1,19 +1,27 @@
 <template>
-  <header class="header">header</header>
+  <header class="header">
+    <div class="main-container">
+      <MainLogo />
+    </div>
+  </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MainLogo from '@/assets/icons/full_logo.svg?component';
+</script>
 
 <style scoped lang="scss">
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid $color-secondary;
+  background-color: #fff;
 
-  .logo {
-    width: 3rem;
-    height: 3rem;
+  .main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 </style>
