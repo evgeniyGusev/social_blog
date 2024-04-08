@@ -3,14 +3,8 @@
     <p class="dialog-head">Вход</p>
 
     <form class="form" @submit.prevent>
-      <ui-input
-        v-model="model.email"
-        v-input-focus:with-ui
-        type="text"
-        label="Электронная почта"
-        placeholder="жаль_не_изменить@mail.com"
-      />
-      <ui-input v-model="model.password" type="password" label="Пароль" placeholder="ОчЕнЬ_СлОжНыЙ_пАрОлЬ" />
+      <ui-input v-model="model.email" v-input-focus:with-ui type="text" label="Электронная почта" />
+      <ui-input v-model="model.password" type="password" label="Пароль" />
       <ui-button type="submit" size="large">Войти</ui-button>
     </form>
 

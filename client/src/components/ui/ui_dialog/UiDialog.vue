@@ -40,10 +40,10 @@ const closeDialog = (event: Event) => {
   backdrop-filter: blur(0.3rem);
 
   &-content {
-    min-width: 364px;
+    width: 364px;
     padding: 2rem;
     background-color: #fff;
-    border-radius: 0.5rem;
+    border-radius: $default-radius;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
   }
 }

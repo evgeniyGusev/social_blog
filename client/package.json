@@ -13,6 +13,8 @@
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" "
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "axios": "^1.6.8",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

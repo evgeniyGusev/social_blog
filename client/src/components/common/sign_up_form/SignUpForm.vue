@@ -2,18 +2,43 @@
   <div class="wrapper">
     <p class="dialog-head">Регистрация</p>
 
-    <form class="form" @submit.prevent>
+    <form class="form" @submit.prevent="submit">
+      <ui-file-upload v-model="model.avatar" rounded class="file-input" accept="image/*">
+        <ImageUserIcon width="2rem" height="2rem" />
+        Выберите аватар
+      </ui-file-upload>
+
       <ui-input
         v-model="model.email"
         v-input-focus:with-ui
         type="text"
         label="Электронная почта"
-        placeholder="жаль_не_изменить@mail.com"
+        :state="$v.$dirty && $v.email.$invalid ? 'error' : 'default'"
+        :error="$v.email.$errors[0]?.$message"
       />
-      <ui-input v-model="model.password" type="password" label="Пароль" placeholder="Пароль" />
-      <ui-input v-model="model.confirmPassword" type="password" label="Подтвердить пароль" placeholder="Пароль" />
-      <ui-input v-model="model.name" label="Имя" placeholder="Иван Иванов" />
-      <ui-input v-model="model.avatar" label="Аватарка" placeholder="Ссылка" />
+
+      <ui-input
+        v-model="model.password"
+        type="password"
+        label="Пароль"
+        :state="$v.$dirty && $v.password.$invalid ? 'error' : 'default'"
+        :error="$v.password.$errors[0]?.$message"
+      />
+
+      <ui-input
+        v-model="model.confirmPassword"
+        type="password"
+        label="Пароль ещё раз"
+        :state="$v.$dirty && $v.confirmPassword.$invalid ? 'error' : 'default'"
+        :error="$v.confirmPassword.$errors[0]?.$message"
+      />
+
+      <ui-input
+        v-model="model.name"
+        label="Имя"
+        :state="$v.$dirty && $v.name.$invalid ? 'error' : 'default'"
+        :error="$v.name.$errors[0]?.$message"
+      />
 
       <ui-button type="submit" size="large">Отправить</ui-button>
     </form>
@@ -28,16 +53,78 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, minLength, email, helpers } from '@vuelidate/validators';
 
-defineEmits(['change-mode']);
+import AuthApi from '@/lib/api/auth';
+import fileToBase64 from '@/helpers/file_to_base64.ts';
 
-const model = reactive({
+import { IModel } from '@/components/common/sign_up_form/interfaces.ts';
+
+import Toast from '@/components/ui/ui_toast/toast';
+import ImageUserIcon from '@/assets/icons/image-user.svg?component';
+
+const emit = defineEmits(['change-mode']);
+
+const model = reactive<IModel>({
   email: '',
   password: '',
   confirmPassword: '',
   name: '',
-  avatar: '',
+  avatar: null,
 });
+
+const validationRules = {
+  email: {
+    required: helpers.withMessage('Обязательно для заполнения', required),
+    email: helpers.withMessage('Некорректная почта', email),
+  },
+  password: {
+    required: helpers.withMessage('Обязательно для заполнения', required),
+    minLength: helpers.withMessage('Минимальная длина 6 символов', minLength(6)),
+  },
+  confirmPassword: {
+    required: helpers.withMessage('Обязательно для заполнения', required),
+    mustBeEqual: helpers.withMessage('Пароли должны совпадать', mustBeEqual),
+  },
+  name: { required: helpers.withMessage('Обязательно для заполнения', required) },
+};
+
+function mustBeEqual(value: string) {
+  return model.password === value;
+}
+
+const $v = useVuelidate(validationRules, model);
+
+async function submit(): Promise<void> {
+  const isFormValid = await $v.value.$validate();
+
+  if (isFormValid) {
+    try {
+      let avatar = '';
+
+      if (model.avatar) {
+        avatar = await fileToBase64(model.avatar);
+      }
+
+      const payload = {
+        email: model.email,
+        password: model.password,
+        name: model.name,
+        avatar: avatar,
+      };
+
+      const { data } = await AuthApi.signUp(payload);
+
+      if (data.success) {
+        Toast.success('Вы успешно зарегистрировались!');
+        emit('change-mode', 'signIn');
+      }
+    } catch (error) {
+      Toast.error(error.response.data.error);
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -56,6 +143,11 @@ const model = reactive({
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+
+    .file-input {
+      width: 50%;
+      align-self: center;
+    }
   }
 
   .dialog-footer {

@@ -40,7 +40,7 @@ withDefaults(defineProps<IUiButtonProps>(), {
   justify-content: center;
   padding: 0.65rem 1rem;
   border: 1px solid transparent;
-  border-radius: 0.5rem;
+  border-radius: $default-radius;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 

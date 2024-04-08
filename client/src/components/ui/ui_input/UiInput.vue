@@ -1,5 +1,5 @@
 <template>
-  <div :class="['input-wrapper', isFocused && '_focused']">
+  <div :class="['input-wrapper', isFocused && '_focused', state === 'error' && '_error']">
     <span class="label">{{ label }}</span>
 
     <input
@@ -11,6 +11,8 @@
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
+
+    <small v-if="state === 'error'" class="error-field">{{ error }}</small>
 
     <ui-button v-if="type === 'password'" template="tertiary" class="eye-button" rounded @click.stop="setLocalType">
       <component :is="localType === 'password' ? EyeOpenIcon : EyeCloseIcon" />
@@ -28,10 +30,14 @@ const props = withDefaults(
   defineProps<{
     type?: string;
     label?: string;
+    state?: 'default' | 'error';
+    error?: string;
   }>(),
   {
     type: 'text',
     label: 'Писать тут',
+    state: 'default',
+    error: 'Ообязательно для заполнения',
   }
 );
 
@@ -50,12 +56,20 @@ function setLocalType(): void {
   position: relative;
   padding: 0.7rem 0.5rem;
   border: 1px solid $color-secondary;
-  border-radius: 0.35rem;
+  border-radius: $default-radius;
   outline: 0 solid transparent;
   transition: ouline 0.2s;
 
   &._focused {
     outline: 2px solid $color-primary;
+  }
+
+  &._error {
+    border-color: $color-red-main;
+
+    .label {
+      color: $color-red-main;
+    }
   }
 
   .label {
@@ -75,6 +89,16 @@ function setLocalType(): void {
     &::placeholder {
       color: $color-secondary;
     }
+  }
+
+  .error-field {
+    position: absolute;
+    bottom: -0.35rem;
+    right: 0.2rem;
+    padding: 0 0.25rem;
+    font-size: 0.8rem;
+    background-color: #fff;
+    color: $color-red-main;
   }
 
   .eye-button {

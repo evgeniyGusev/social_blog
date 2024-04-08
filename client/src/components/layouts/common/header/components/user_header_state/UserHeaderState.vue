@@ -1,7 +1,9 @@
 <template>
   <div class="user-state">
     <ui-dialog v-model="isModalOpen">
-      <component :is="currentModal" @change-mode="(mode: 'signIn' | 'signUp') => (modalMode = mode)" />
+      <keep-alive>
+        <component :is="currentModal" @change-mode="(mode: 'signIn' | 'signUp') => (modalMode = mode)" />
+      </keep-alive>
     </ui-dialog>
 
     <template v-if="!user">

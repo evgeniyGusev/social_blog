@@ -24,8 +24,8 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, _, next) => {
-  const isAuth = checkAuth();
+router.beforeEach(async (to, _, next) => {
+  const isAuth = await checkAuth();
 
   if (!isAuth && to.meta.requiresAuth) {
     next('/guest');

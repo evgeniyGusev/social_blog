@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 
-import { IUserStore } from '@/store/interfaces/user_store_interface';
+import { ICurrentUser } from '@/interfaces/common_interfaces';
 
-const user = ref<IUserStore | null>(null);
+const user = ref<ICurrentUser | null>(null);
 
 export default user;
