@@ -1,0 +1,19 @@
+.dialog-enter-active,
+.dialog-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.dialog-enter-from,
+.dialog-leave-to {
+  opacity: 0;
+}
+
+.dialog-enter-active .dialog-content,
+.dialog-leave-active .dialog-content {
+  transition: transform 0.2s ease;
+}
+
+.dialog-enter-from .dialog-content,
+.dialog-leave-to .dialog-content {
+  transform: scale(1.2);
+}

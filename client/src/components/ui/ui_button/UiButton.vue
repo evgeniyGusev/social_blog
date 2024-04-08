@@ -10,16 +10,16 @@
         'ui-button--large': size === 'large',
         'ui-button--primary': template === 'primary',
         'ui-button--secondary': template === 'secondary',
-        'ui-button--danger': template === 'danger',
         'ui-button--tertiary': template === 'tertiary',
+        'ui-button--link': template === 'link',
+        'ui-button--danger': template === 'danger',
         'ui-button--disabled': disabled,
         'ui-button--rounded': rounded,
       },
     ]"
     :disabled="disabled"
   >
-    <slot name="icon"></slot>
-    <slot v-if="!iconOnly"></slot>
+    <slot></slot>
   </button>
 </template>
 
@@ -38,15 +38,11 @@ withDefaults(defineProps<IUiButtonProps>(), {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1rem;
   border: 1px solid transparent;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: box-shadow 0.2s ease-in-out;
-
-  &:not(:disabled):not(.ui-button--tertiary):hover {
-    box-shadow: 0 0 7px 1px $color-red-main;
-  }
+  transition: all 0.2s ease-in-out;
 
   &:not(.ui-button--rounded):focus {
     outline: #000 solid 3px;
@@ -57,7 +53,7 @@ withDefaults(defineProps<IUiButtonProps>(), {
   }
 
   &--large {
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 1.5rem;
   }
 
   &--disabled {
@@ -68,28 +64,52 @@ withDefaults(defineProps<IUiButtonProps>(), {
   &--primary {
     background-color: $color-primary;
     color: #fff;
+
+    &:not(:disabled):hover {
+      background-color: $color-light;
+      color: #000;
+    }
   }
 
   &--secondary {
     background-color: #fff;
     color: $color-primary;
     border-color: $color-primary;
+
+    &:not(:disabled):hover {
+      background-color: $color-light;
+      border-color: transparent;
+    }
   }
 
   &--tertiary {
     background-color: #fff;
     color: $color-primary;
     border-color: transparent;
-    transition: text-shadow 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 
-    &:hover {
-      text-shadow: 0 0 5px $color-red-main;
+    &:not(:disabled):hover {
+      background-color: $color-light;
+    }
+  }
+
+  &--link {
+    padding: 0;
+    background-color: transparent;
+    color: $color-primary;
+    border-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: $color-primary;
+    transition: text-decoration-color 0.2s ease-in-out;
+
+    &:not(:disabled):hover {
+      text-decoration-color: $color-light;
     }
   }
 
   &--rounded {
     border-radius: 100%;
-    padding: 0.5rem;
+    padding: 0;
   }
 }
 </style>

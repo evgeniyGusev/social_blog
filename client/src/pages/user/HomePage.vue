@@ -1,11 +1,7 @@
 <template>
-  <div></div>
+  <div><h1>ЭТО ДОМАШНЯЯ СТРАНИЦА ПОЧТЕННОГО ПОЛЬЗОВАТЕЛЯ</h1></div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="main-container">
-      <MainLogo />
+      <MainLogo class="main-logo" />
 
       <UserHeaderState />
     </div>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import MainLogo from '@/assets/icons/full_logo.svg?component';
-import UserHeaderState from '@/components/layouts/common/header/UserHeaderState.vue';
+import UserHeaderState from '@/components/layouts/common/header/components/user_header_state/UserHeaderState.vue';
 </script>
 
 <style scoped lang="scss">

@@ -29,6 +29,8 @@ router.beforeEach((to, _, next) => {
 
   if (!isAuth && to.meta.requiresAuth) {
     next('/guest');
+  } else if (isAuth && to.name === 'guest') {
+    next('/');
   } else {
     next();
   }
