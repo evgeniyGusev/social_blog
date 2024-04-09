@@ -2,11 +2,7 @@
   <div class="user-state">
     <ui-dialog v-model="isModalOpen">
       <keep-alive>
-        <component
-          :is="currentModal"
-          @change-mode="(mode: 'signIn' | 'signUp') => (modalMode = mode)"
-          @close="isModalOpen = false"
-        />
+        <component :is="currentModal" @change-mode="changeMode" @close="isModalOpen = false" />
       </keep-alive>
     </ui-dialog>
 
@@ -42,6 +38,10 @@ function openSignInDialog() {
 function openSignUpDialog() {
   modalMode.value = 'signUp';
   isModalOpen.value = true;
+}
+
+function changeMode(mode: 'signIn' | 'signUp'): void {
+  modalMode.value = mode;
 }
 </script>
 
