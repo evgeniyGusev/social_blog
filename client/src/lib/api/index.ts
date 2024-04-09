@@ -1,4 +1,13 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.defaults.headers.access_token = localStorage.getItem('access_token') || '';
+import { setToken } from '@/lib/api/helpers/token_helper.ts';
+
+export default function setAxios(): void {
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+
+  const accessToken = localStorage.getItem('access_token');
+
+  if (accessToken) {
+    setToken(accessToken);
+  }
+}

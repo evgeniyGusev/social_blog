@@ -10,12 +10,13 @@ export const signUpController = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res
-        .status(400)
-        .json({ success: false, error: errors.errors?.[0]?.msg || 'Не валидные данные' });
+      return res.status(400).json({
+        success: false,
+        error: errors.errors?.[0]?.msg || 'Не валидные данные',
+      });
     }
 
-    const { email, password, fullName, avatarUrl } = req.body;
+    const { email, password, name, avatar } = req.body;
 
     const salt = bcryptjs.genSaltSync(10);
     const passwordHash = bcryptjs.hashSync(password, salt);
@@ -23,20 +24,18 @@ export const signUpController = async (req, res) => {
     const newUser = new UserModel({
       email,
       passwordHash,
-      fullName,
-      avatarUrl,
+      name,
+      avatar,
+      favs: [],
+      friends: [],
     });
 
     await newUser.save();
 
     res.status(201).json({
       success: true,
-      user: {
-        email,
-      },
     });
   } catch (e) {
-    console.log('ERROR BLYAT: ', e);
     if (e.keyPattern.email) {
       return res
         .status(400)
