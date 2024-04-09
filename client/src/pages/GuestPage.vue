@@ -1,5 +1,6 @@
 <template>
   <div>
+    <UiSpinner />
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolorem dolorum ducimus ea earum inventore ipsa
     ipsum labore maiores, minima molestiae neque omnis optio quasi quidem quisquam quod ullam vitae voluptate
     voluptates? Aliquam consequuntur debitis fuga iure labore maiores molestias nulla placeat voluptatem voluptatum! Ab
@@ -56,3 +57,6 @@
     suscipit totam unde ut velit voluptatem voluptatibus, voluptatum. Labore obcaecati, reprehenderit.
   </div>
 </template>
+<script setup lang="ts">
+import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
+</script>

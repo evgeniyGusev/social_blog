@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { ICurrentUser } from '@/interfaces/common_interfaces';
+import { ICurrentUserResponse } from '@/interfaces/common_interfaces';
 
-function fetchCurrentUser(): Promise<ICurrentUser> {
+function fetchCurrentUser(): Promise<ICurrentUserResponse> {
   return axios.get('/api/auth/me');
 }
 

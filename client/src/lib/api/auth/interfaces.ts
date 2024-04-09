@@ -6,5 +6,19 @@ export interface ISignUpPayload {
 }
 
 export interface ISignUpResponse {
-  success: boolean;
+  data: {
+    success: boolean;
+  };
+}
+
+export interface ISignInPayload {
+  email: string;
+  password: string;
+}
+
+export interface ISignInResponse {
+  data: {
+    access: boolean;
+    token: string;
+  };
 }

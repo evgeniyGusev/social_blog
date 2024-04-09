@@ -9,3 +9,10 @@ export interface ICurrentUser {
   updatedAt: string;
   __v: number;
 }
+
+export interface ICurrentUserResponse {
+  data: {
+    access: boolean;
+    user: ICurrentUser;
+  };
+}

@@ -40,7 +40,7 @@
         :error="$v.name.$errors[0]?.$message"
       />
 
-      <ui-button type="submit" size="large">Отправить</ui-button>
+      <ui-button type="submit" size="large" :is-loading="isFormSending" :disabled="isFormSending">Отправить</ui-button>
     </form>
 
     <div class="dialog-footer">
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, email, helpers } from '@vuelidate/validators';
 
@@ -60,11 +60,14 @@ import AuthApi from '@/lib/api/auth';
 import fileToBase64 from '@/helpers/file_to_base64.ts';
 
 import { IModel } from '@/components/common/sign_up_form/interfaces.ts';
+import { ISignUpResponse } from '@/lib/api/auth/interfaces.ts';
 
 import Toast from '@/components/ui/ui_toast/toast';
 import ImageUserIcon from '@/assets/icons/image-user.svg?component';
 
 const emit = defineEmits(['change-mode']);
+
+const isFormSending = ref(false);
 
 const model = reactive<IModel>({
   email: '',
@@ -101,6 +104,8 @@ async function submit(): Promise<void> {
 
   if (isFormValid) {
     try {
+      isFormSending.value = true;
+
       let avatar = '';
 
       if (model.avatar) {
@@ -114,14 +119,16 @@ async function submit(): Promise<void> {
         avatar: avatar,
       };
 
-      const { data } = await AuthApi.signUp(payload);
+      const { data }: ISignUpResponse = await AuthApi.signUp(payload);
 
       if (data.success) {
         Toast.success('Вы успешно зарегистрировались!');
         emit('change-mode', 'signIn');
       }
-    } catch (error) {
+    } catch (error: any) {
       Toast.error(error.response.data.error);
+    } finally {
+      isFormSending.value = false;
     }
   }
 }

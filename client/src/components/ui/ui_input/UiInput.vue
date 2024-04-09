@@ -1,9 +1,10 @@
 <template>
-  <div :class="['input-wrapper', isFocused && '_focused', state === 'error' && '_error']">
+  <div :class="['input-wrapper', isFocused && '_focused', state === 'error' && '_error']" @click="inputRef?.focus?.()">
     <span class="label">{{ label }}</span>
 
     <input
       v-model="model"
+      ref="inputRef"
       :type="type === 'password' ? localType : type"
       class="ui-input-input"
       name="ui-input"
@@ -43,6 +44,7 @@ const props = withDefaults(
 
 const model = defineModel();
 
+const inputRef = ref<HTMLInputElement | null>(null);
 const isFocused = ref(false);
 const localType = ref(props.type);
 
@@ -59,6 +61,7 @@ function setLocalType(): void {
   border-radius: $default-radius;
   outline: 0 solid transparent;
   transition: ouline 0.2s;
+  cursor: text;
 
   &._focused {
     outline: 2px solid $color-primary;

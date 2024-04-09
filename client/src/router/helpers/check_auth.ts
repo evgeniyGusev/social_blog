@@ -1,6 +1,6 @@
 import user from '@/store/index';
 import UserApi from '@/lib/api/user';
-import { ICurrentUser } from '@/interfaces/common_interfaces.ts';
+import { ICurrentUserResponse } from '@/interfaces/common_interfaces.ts';
 
 export default async function checkAuth(): Promise<boolean> {
   if (!user.value) {
@@ -8,10 +8,10 @@ export default async function checkAuth(): Promise<boolean> {
 
     if (token) {
       try {
-        const data: ICurrentUser = await UserApi.fetchCurrentUser();
+        const { data }: ICurrentUserResponse = await UserApi.fetchCurrentUser();
 
-        if (data) {
-          user.value = data;
+        if (data.access) {
+          user.value = data.user;
         }
 
         return true;

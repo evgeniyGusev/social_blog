@@ -19,12 +19,14 @@
     ]"
     :disabled="disabled"
   >
-    <slot></slot>
+    <slot v-if="!isLoading"></slot>
+    <UiSpinner v-else />
   </button>
 </template>
 
 <script setup lang="ts">
 import { IUiButtonProps } from './interface';
+import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
 
 withDefaults(defineProps<IUiButtonProps>(), {
   size: 'medium',
@@ -56,11 +58,6 @@ withDefaults(defineProps<IUiButtonProps>(), {
     padding: 1rem 1.5rem;
   }
 
-  &--disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
   &--primary {
     background-color: $color-primary;
     color: #fff;
@@ -68,6 +65,12 @@ withDefaults(defineProps<IUiButtonProps>(), {
     &:not(:disabled):hover {
       background-color: $color-light;
       color: #000;
+    }
+
+    &.ui-button--disabled {
+      background-color: $color-light;
+      color: $color-secondary;
+      cursor: not-allowed;
     }
   }
 
@@ -80,6 +83,12 @@ withDefaults(defineProps<IUiButtonProps>(), {
       background-color: $color-light;
       border-color: transparent;
     }
+
+    &.ui-button--disabled {
+      border-color: $color-light;
+      color: $color-secondary;
+      cursor: not-allowed;
+    }
   }
 
   &--tertiary {
@@ -90,6 +99,11 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
     &:not(:disabled):hover {
       background-color: $color-light;
+    }
+
+    &.ui-button--disabled {
+      color: $color-secondary;
+      cursor: not-allowed;
     }
   }
 
@@ -104,6 +118,12 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
     &:not(:disabled):hover {
       text-decoration-color: $color-light;
+    }
+
+    &.ui-button--disabled {
+      color: $color-secondary;
+      text-decoration-color: $color-secondary;
+      cursor: not-allowed;
     }
   }
 

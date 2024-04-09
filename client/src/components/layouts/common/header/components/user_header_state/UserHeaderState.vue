@@ -2,7 +2,11 @@
   <div class="user-state">
     <ui-dialog v-model="isModalOpen">
       <keep-alive>
-        <component :is="currentModal" @change-mode="(mode: 'signIn' | 'signUp') => (modalMode = mode)" />
+        <component
+          :is="currentModal"
+          @change-mode="(mode: 'signIn' | 'signUp') => (modalMode = mode)"
+          @close="isModalOpen = false"
+        />
       </keep-alive>
     </ui-dialog>
 
@@ -12,8 +16,8 @@
     </template>
 
     <template v-else>
-      <span class="user-name">{{ user.fullName }}</span>
-      <img :src="user.avatarUrl" :alt="user.fullName" class="user-avatar" />
+      <span class="user-name">{{ user.name }}</span>
+      <img :src="user.avatar" :alt="user.name" class="user-avatar" />
     </template>
   </div>
 </template>
@@ -45,11 +49,7 @@ function openSignUpDialog() {
 .user-state {
   display: flex;
   align-items: center;
-  gap: 1rem;
-
-  .user-name {
-    margin-right: 1rem;
-  }
+  gap: 0.5rem;
 
   .user-avatar {
     width: 3rem;
