@@ -6,7 +6,9 @@
       </keep-alive>
     </ui-dialog>
 
-    <template v-if="!user">
+    <ui-spinner v-if="isUserLoading" height="100%" width="auto" />
+
+    <template v-else-if="!user">
       <ui-button @click="openSignUpDialog"> Создать аккаунт </ui-button>
       <ui-button template="secondary" @click="openSignInDialog">Войти</ui-button>
     </template>
@@ -21,10 +23,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-import user from '@/store';
+import User from '@/store/user.ts';
 
 import SignInForm from '@/components/common/sign_in_form/SignInForm.vue';
 import SignUpForm from '@/components/common/sign_up_form/SignUpForm.vue';
+import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
+
+const { user, isUserLoading } = User;
 
 const isModalOpen = ref(false);
 const modalMode = ref<'signIn' | 'signUp'>('signIn');
@@ -52,8 +57,8 @@ function changeMode(mode: 'signIn' | 'signUp'): void {
   gap: 0.5rem;
 
   .user-avatar {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 100%;
   }
 }
