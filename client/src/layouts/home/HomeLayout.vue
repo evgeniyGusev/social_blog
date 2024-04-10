@@ -4,6 +4,10 @@
       <nav class="left-side-nav">
         <LeftSideMenuList :list="leftSideNavList" />
       </nav>
+
+      <ui-button template="secondary" class="add-post-button">
+        <PlusPostIcon class="add-post-icon" /> Добавить пост
+      </ui-button>
     </aside>
 
     <router-view />
@@ -12,8 +16,6 @@
       <div class="box">Тут какая-то новость</div>
       <div class="box">Тут какое-то событие</div>
       <div class="box">А тут еще что-то</div>
-      <div class="box">Здесь можно тоже что-нибудь</div>
-      <div class="box">Ну и тут тоже</div>
     </aside>
   </section>
 </template>
@@ -22,10 +24,12 @@
 import { ref } from 'vue';
 
 import LeftSideMenuList from '@/layouts/home/components/LeftSideMenuList.vue';
-import HouseIcon from '@/assets/icons/house.svg';
-import ClipboardIcon from '@/assets/icons/clipboard.svg';
-import UsersIcon from '@/assets/icons/users.svg';
-import HeartIcon from '@/assets/icons/heart.svg';
+import HouseIcon from '@/assets/icons/house.svg?component';
+import ClipboardIcon from '@/assets/icons/clipboard.svg?component';
+import UsersIcon from '@/assets/icons/users.svg?component';
+import HeartIcon from '@/assets/icons/heart.svg?component';
+import PlusPostIcon from '@/assets/icons/plus-post.svg?component';
+import SettingsIcon from '@/assets/icons/settings.svg?component';
 
 const leftSideNavList = ref([
   {
@@ -48,6 +52,11 @@ const leftSideNavList = ref([
     icon: HeartIcon,
     link: { name: 'my-favorites' },
   },
+  {
+    title: 'Настройки',
+    icon: SettingsIcon,
+    link: { name: 'my-settings' },
+  },
 ]);
 </script>
 
@@ -62,12 +71,25 @@ const leftSideNavList = ref([
     top: 89px;
     min-width: 170px;
     height: fit-content;
+
+    .add-post-button {
+      width: 100%;
+      margin-top: 3rem;
+      font-weight: 700;
+
+      .add-post-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+      }
+    }
   }
 
   .right-aside {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    min-width: 170px;
 
     .box {
       display: flex;
@@ -77,8 +99,7 @@ const leftSideNavList = ref([
       height: 5rem;
       padding: 1rem;
       border-radius: $default-radius;
-      background-color: $color-secondary;
-      color: #fff;
+      border: 2px solid $color-secondary;
     }
   }
 }

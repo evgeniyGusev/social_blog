@@ -35,6 +35,11 @@ import UserHeaderState from '@/components/layouts/common/header/components/user_
       align-items: center;
       gap: 0.5rem;
 
+      .main-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+
       .main-title {
         font-size: 1.5rem;
         font-weight: 700;

@@ -16,6 +16,7 @@
     <template v-else>
       <span class="user-name">{{ user.name }}</span>
       <img :src="user.avatar" :alt="user.name" class="user-avatar" />
+      <ui-button rounded template="tertiary"><out-rounded class="logout-icon" /></ui-button>
     </template>
   </div>
 </template>
@@ -28,6 +29,7 @@ import User from '@/store/user.ts';
 import SignInForm from '@/components/common/sign_in_form/SignInForm.vue';
 import SignUpForm from '@/components/common/sign_up_form/SignUpForm.vue';
 import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
+import OutRounded from '@/assets/icons/out-rounded.svg?component';
 
 const { user, isUserLoading } = User;
 
@@ -60,6 +62,11 @@ function changeMode(mode: 'signIn' | 'signUp'): void {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 100%;
+  }
+
+  .logout-icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 </style>
