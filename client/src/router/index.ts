@@ -8,10 +8,44 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/pages/user/HomePage.vue'),
+      component: () => import('@/layouts/home/HomeLayout.vue'),
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          path: 'my-home',
+          name: 'my-home',
+          component: () => import('@/pages/user/HomePage.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'my-posts',
+          name: 'my-posts',
+          component: () => import('@/pages/user/MyPostsPage.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'my-friends',
+          name: 'my-friends',
+          component: () => import('@/pages/user/MyFriendsPage.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'my-favorites',
+          name: 'my-favorites',
+          component: () => import('@/pages/user/MyFavoritesPage.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+      ],
     },
     {
       path: '/guest',
@@ -29,8 +63,8 @@ router.beforeEach(async (to, _, next) => {
 
   if (!isAuth && to.meta.requiresAuth) {
     next('/guest');
-  } else if (isAuth && to.name === 'guest') {
-    next('/');
+  } else if (isAuth && (to.name === 'guest' || to.name === 'home')) {
+    next({ name: 'my-home' });
   } else {
     next();
   }

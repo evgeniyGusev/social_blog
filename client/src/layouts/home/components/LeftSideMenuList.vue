@@ -1,10 +1,10 @@
 <template>
   <ul class="left-side-list">
     <li v-for="item in list" :key="item.title" class="left-side-item">
-      <a href="#" class="left-side-link">
+      <router-link :to="item.link" class="left-side-link">
         <component :is="item.icon" class="left-side-icon" />
         <span class="left-side-title">{{ item.title }}</span>
-      </a>
+      </router-link>
     </li>
   </ul>
 </template>
