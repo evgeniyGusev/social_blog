@@ -5,8 +5,12 @@ import { ICurrentUserResponse } from '@/interfaces/common_interfaces.ts';
 const { user, isUserLoading } = User;
 
 export default async function checkAuth(): Promise<boolean> {
-  if (!user.value) {
-    const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem('access_token');
+
+  if (!user.value || !token) {
+    if (user.value && !token) {
+      user.value = null;
+    }
 
     if (token) {
       try {

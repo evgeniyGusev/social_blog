@@ -1,5 +1,5 @@
 <template>
-  <HomeLayout>
+  <div>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam autem consectetur distinctio fugiat id
     illo, in labore libero necessitatibus nemo nulla perferendis quaerat quo, ratione! Aliquid, dolor dolorem doloremque
     ea eos illum inventore magnam minima molestiae nam non perspiciatis quidem quis rerum soluta tenetur ullam? Ab animi
@@ -61,11 +61,9 @@
     reprehenderit ullam, vero voluptas? Accusantium alias animi architecto consequuntur delectus dolor, doloremque
     dolores, eaque earum ex facere facilis hic ipsum iure iusto maxime perferendis porro quaerat repellat sint tempore
     temporibus unde. Deleniti facilis illum impedit molestiae nihil rem similique.
-  </HomeLayout>
+  </div>
 </template>
 
-<script setup lang="ts">
-import HomeLayout from '@/layouts/home/HomeLayout.vue';
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss"></style>

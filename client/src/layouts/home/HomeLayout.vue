@@ -5,7 +5,9 @@
         <LeftSideMenuList :list="leftSideNavList" />
       </nav>
     </aside>
-    <slot></slot>
+
+    <router-view />
+
     <aside class="right-aside">
       <div class="box">Тут какая-то новость</div>
       <div class="box">Тут какое-то событие</div>
@@ -29,7 +31,7 @@ const leftSideNavList = ref([
   {
     title: 'Главная',
     icon: HouseIcon,
-    link: { name: 'home' },
+    link: { name: 'my-home' },
   },
   {
     title: 'Мои посты',
