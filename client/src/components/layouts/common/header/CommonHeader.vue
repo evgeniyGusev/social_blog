@@ -1,7 +1,11 @@
 <template>
   <header class="header">
     <div class="main-container">
-      <MainLogo class="main-logo" />
+      <div class="logo">
+        <MainLogo class="main-logo" />
+
+        <h1 class="main-title">ShareSpace</h1>
+      </div>
 
       <UserHeaderState />
     </div>
@@ -17,7 +21,7 @@ import UserHeaderState from '@/components/layouts/common/header/components/user_
 .header {
   position: sticky;
   top: 0;
-  padding: 0.75rem 0;
+  padding: 1rem 0;
   border-bottom: 1px solid $color-secondary;
   background-color: #fff;
 
@@ -25,6 +29,17 @@ import UserHeaderState from '@/components/layouts/common/header/components/user_
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .main-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+    }
   }
 }
 </style>
