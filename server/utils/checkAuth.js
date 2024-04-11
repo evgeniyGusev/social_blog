@@ -1,7 +1,16 @@
 import jwt from 'jsonwebtoken';
 
 export default function checkAuth(req, res, next) {
-  const token = req.headers.access_token;
+  const splitCookies = req.headers.cookie?.split?.('; ');
+  const accessCookie = splitCookies?.find?.((cookie) =>
+    cookie.startsWith('access_token=')
+  );
+
+  let token;
+
+  if (accessCookie) {
+    [, token] = accessCookie.split('=');
+  }
 
   if (!token) {
     return res.status(401).json({ access: false });

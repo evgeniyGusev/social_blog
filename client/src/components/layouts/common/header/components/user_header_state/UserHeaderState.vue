@@ -16,22 +16,27 @@
     <template v-else>
       <span class="user-name">{{ user.name }}</span>
       <img :src="user.avatar" :alt="user.name" class="user-avatar" />
-      <ui-button rounded template="tertiary"><out-rounded class="logout-icon" /></ui-button>
+      <ui-button rounded template="tertiary"><out-rounded class="logout-icon" @click="logOutHandler" /></ui-button>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
-import User from '@/store/user.ts';
+import { UserStore } from '@/store/user.ts';
+import { AuthApi } from '@/lib/api/auth';
 
 import SignInForm from '@/components/common/sign_in_form/SignInForm.vue';
 import SignUpForm from '@/components/common/sign_up_form/SignUpForm.vue';
 import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
+import Toast from '@/components/ui/ui_toast/toast.ts';
+
 import OutRounded from '@/assets/icons/out-rounded.svg?component';
 
-const { user, isUserLoading } = User;
+const router = useRouter();
+const { user, isUserLoading } = UserStore;
 
 const isModalOpen = ref(false);
 const modalMode = ref<'signIn' | 'signUp'>('signIn');
@@ -49,6 +54,19 @@ function openSignUpDialog() {
 
 function changeMode(mode: 'signIn' | 'signUp'): void {
   modalMode.value = mode;
+}
+
+async function logOutHandler() {
+  try {
+    await AuthApi.signOut();
+
+    Toast.success('Вы вышли из аккаунта');
+    UserStore.clearUser();
+
+    await router.push({ name: 'guest' });
+  } catch (e) {
+    Toast.error('Не удалось выйти из аккаунта');
+  }
 }
 </script>
 

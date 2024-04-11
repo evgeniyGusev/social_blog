@@ -1,6 +1,6 @@
 <template>
   <ul class="left-side-list">
-    <li v-for="item in list" :key="item.title" class="left-side-item">
+    <li v-for="item in list" :key="item.title" :class="['left-side-item', $route.name === item.link.name && '_active']">
       <router-link :to="item.link" class="left-side-link">
         <component :is="item.icon" class="left-side-icon" />
         <span class="left-side-title">{{ item.title }}</span>
@@ -25,10 +25,33 @@ defineProps<{
   list-style-type: none;
 
   .left-side-item {
+    position: relative;
     padding: 0.5rem 1rem;
     border-radius: $default-radius;
     cursor: pointer;
     transition: all 0.2s ease;
+
+    &._active::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      height: 50%;
+      border-radius: 0 0 0 $default-radius;
+      background-color: $color-primary;
+    }
+
+    &._active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 15%;
+      height: 4px;
+      border-radius: 0 0 0 $default-radius;
+      background-color: $color-primary;
+    }
 
     &:hover {
       background-color: $color-light;

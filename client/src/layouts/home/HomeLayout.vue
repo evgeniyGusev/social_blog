@@ -13,9 +13,7 @@
     <router-view />
 
     <aside class="right-aside">
-      <div class="box">Тут какая-то новость</div>
-      <div class="box">Тут какое-то событие</div>
-      <div class="box">А тут еще что-то</div>
+      <aside-new-users v-if="newUsers.length" :list="newUsers" />
     </aside>
   </section>
 </template>
@@ -23,13 +21,19 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import useNewUsers from '@/layouts/home/composables/use_new_users.ts';
+
 import LeftSideMenuList from '@/layouts/home/components/LeftSideMenuList.vue';
+import AsideNewUsers from '@/layouts/home/components/AsideNewUsers.vue';
+
 import HouseIcon from '@/assets/icons/house.svg?component';
 import ClipboardIcon from '@/assets/icons/clipboard.svg?component';
 import UsersIcon from '@/assets/icons/users.svg?component';
 import HeartIcon from '@/assets/icons/heart.svg?component';
 import PlusPostIcon from '@/assets/icons/plus-post.svg?component';
 import SettingsIcon from '@/assets/icons/settings.svg?component';
+
+const { newUsers } = useNewUsers();
 
 const leftSideNavList = ref([
   {
@@ -89,7 +93,7 @@ const leftSideNavList = ref([
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    min-width: 170px;
+    width: 200px;
 
     .box {
       display: flex;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiSpinner />
+    <img :src="resolvePathToImg('test-img.png')" alt="test" />
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolorem dolorum ducimus ea earum inventore ipsa
     ipsum labore maiores, minima molestiae neque omnis optio quasi quidem quisquam quod ullam vitae voluptate
     voluptates? Aliquam consequuntur debitis fuga iure labore maiores molestias nulla placeat voluptatem voluptatum! Ab
@@ -58,5 +58,5 @@
   </div>
 </template>
 <script setup lang="ts">
-import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
+import { resolvePathToImg } from '@/helpers/resolve_path_to_media.ts';
 </script>

@@ -16,3 +16,16 @@ export interface ICurrentUserResponse {
     user: ICurrentUser;
   };
 }
+
+export interface INewUsersList {
+  _id: string;
+  name: string;
+  avatar: string;
+}
+
+export interface INewUsersResponse {
+  data: {
+    success: boolean;
+    data: INewUsersList[];
+  };
+}

@@ -65,9 +65,13 @@ export const signInController = async (req, res) => {
       if (bcryptjs.compareSync(password, user.passwordHash)) {
         const token = generateToken(user._id);
 
+        res.set(
+          'Set-Cookie',
+          `access_token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24 * 7}`
+        );
+
         return res.json({
           access: true,
-          token,
         });
       }
 
@@ -113,6 +117,8 @@ export const updateUserController = async (req, res) => {
 // signOut
 export const signOutController = async (req, res) => {
   try {
+    res.set('Set-Cookie', `access_token=''; HttpOnly; Path=/; Max-Age=0`);
+
     return res.json({
       access: true,
     });
@@ -134,11 +140,11 @@ export const currentUserController = async (req, res) => {
 
     const { passwordHash, ...userRes } = user._doc;
 
-    return res.json({
+    return res.status(200).json({
       access: true,
       user: userRes,
     });
   } catch (e) {
-    res.status(500).json({ access: false, error: e.message });
+    res.status(404).json({ access: false, error: e.message });
   }
 };

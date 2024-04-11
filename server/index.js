@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { fileURLToPath } from 'url';
 
 import authRouter from './routes/auth.js';
+import usersRouter from './routes/users.js';
 
 dotenv.config();
 
@@ -21,11 +22,16 @@ app.use(cookieParser());
 
 // api router
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 // static files
 const staticDir = path.join(__dirname, '..', 'client', 'dist');
 
 app.use(express.static(staticDir));
+app.use(
+  '/uploads/img',
+  express.static(path.join(__dirname, '..', 'uploads', 'img'))
+);
 
 // frontend router
 app.get('*', (req, res) => res.sendFile(path.join(staticDir, 'index.html')));

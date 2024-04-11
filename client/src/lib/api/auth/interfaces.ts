@@ -22,3 +22,9 @@ export interface ISignInResponse {
     token: string;
   };
 }
+
+export interface ISignOutResponse {
+  data: {
+    access: boolean;
+  };
+}

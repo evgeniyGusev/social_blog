@@ -35,8 +35,7 @@ import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, helpers } from '@vuelidate/validators';
 
-import AuthApi from '@/lib/api/auth';
-import { setToken } from '@/lib/api/helpers/token_helper.ts';
+import { AuthApi } from '@/lib/api/auth';
 
 import { ISignInResponse } from '@/lib/api/auth/interfaces.ts';
 
@@ -77,8 +76,6 @@ async function submit(): Promise<void> {
       if (data.access) {
         emit('close');
         Toast.success('Добро пожаловать!');
-        localStorage.setItem('access_token', data.token);
-        setToken(data.token);
 
         await router.push({ name: 'home' });
       }
