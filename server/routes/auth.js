@@ -10,10 +10,16 @@ import {
 
 import { signUpValidation, signInValidation } from '../validations/auth.js';
 import checkAuth from '../utils/checkAuth.js';
+import { upload } from '../utils/multer.js';
 
 const authRouter = new Router();
 
-authRouter.post('/sign_up', ...signUpValidation, signUpController);
+authRouter.post(
+  '/sign_up',
+  ...signUpValidation,
+  upload.single('avatar'),
+  signUpController
+);
 authRouter.post('/sign_in', ...signInValidation, signInController);
 authRouter.get('/me', checkAuth, currentUserController);
 authRouter.get('/sign_out', checkAuth, signOutController);

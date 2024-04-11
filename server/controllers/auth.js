@@ -7,7 +7,7 @@ import { generateToken } from '../utils/token.js';
 // signUp
 export const signUpController = async (req, res) => {
   try {
-    const errors = validationResult(req);
+    const errors = validationResult(req.body);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -16,7 +16,8 @@ export const signUpController = async (req, res) => {
       });
     }
 
-    const { email, password, name, avatar } = req.body;
+    const { email, password, name } = req.body;
+    const avatar = req.file?.originalname ?? req.body.avatar;
 
     const salt = bcryptjs.genSaltSync(10);
     const passwordHash = bcryptjs.hashSync(password, salt);

@@ -1,9 +1,4 @@
-export interface ISignUpPayload {
-  email: string;
-  password: string;
-  name: string;
-  avatar: string;
-}
+export type ISignUpPayload = FormData;
 
 export interface ISignUpResponse {
   data: {

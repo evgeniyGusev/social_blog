@@ -9,7 +9,7 @@ import {
 } from '@/lib/api/auth/interfaces.ts';
 
 function signUp(data: ISignUpPayload): Promise<ISignUpResponse> {
-  return axios.post('/api/auth/sign_up', data);
+  return axios.post('/api/auth/sign_up', data, { headers: { 'Content-Type': 'multipart/form-data' } });
 }
 
 function signIn(data: ISignInPayload): Promise<ISignInResponse> {
