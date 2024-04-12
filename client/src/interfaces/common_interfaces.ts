@@ -3,8 +3,8 @@ export interface ICurrentUser {
   name: string;
   email: string;
   avatar: string;
-  favs: [];
-  friends: [];
+  favs: string[];
+  friends: string[];
   createdAt: string;
   updatedAt: string;
   __v: number;

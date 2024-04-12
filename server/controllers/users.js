@@ -42,3 +42,40 @@ export const getUserByIdController = async (req, res) => {
     res.status(404).json({ access: false, error: 'Пользователь не найден' });
   }
 };
+
+export const addUserToFriendsController = async (req, res) => {
+  try {
+    const currentUser = await UserModel.findById(req.userId);
+    const user = await UserModel.findById(req.body.id);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ access: false, error: 'Пользователь не найден' });
+    }
+
+    if (!currentUser) {
+      return res
+        .status(404)
+        .json({ access: false, error: 'Пользователь не найден' });
+    }
+
+    if (currentUser.friends.includes(user._id)) {
+      return res
+        .status(404)
+        .json({ access: false, error: 'Пользователь уже в друзьях' });
+    }
+
+    currentUser.friends = [...currentUser.friends, user._id];
+    user.friends = [...user.friends, currentUser._id];
+
+    await currentUser.save();
+    await user.save();
+
+    const { passwordHash, ...userRes } = currentUser._doc;
+
+    return res.status(200).json({ access: true, user: userRes });
+  } catch (e) {
+    res.status(404).json({ access: false, error: e.message });
+  }
+};

@@ -16,8 +16,8 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     avatar: String,
-    favs: [],
-    friends: [],
+    favs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

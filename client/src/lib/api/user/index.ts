@@ -14,8 +14,13 @@ function fetchUserById(id: string | string[]): Promise<IUsersByIdResponse> {
   return axios.get(`/api/users/${id}`);
 }
 
+function addUserToFriends(id: string | string[]): Promise<ICurrentUserResponse> {
+  return axios.post(`/api/users/add_friend`, { id });
+}
+
 export const UserApi = {
   fetchCurrentUser,
   fetchNewUsers,
   fetchUserById,
+  addUserToFriends,
 };

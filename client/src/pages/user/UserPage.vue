@@ -4,7 +4,7 @@
 
     <div v-else-if="!user" class="error-user">Не удалось получить пользователя</div>
 
-    <pre v-else>{{ user }}</pre>
+    <UserMainInfo v-else :user="user" />
   </section>
 </template>
 
@@ -15,6 +15,8 @@ import { useRoute } from 'vue-router';
 import { UserApi } from '@/lib/api/user';
 
 import { IUserForPresent } from '@/lib/api/user/interfaces.ts';
+
+import UserMainInfo from '@/components/user-page/user-main-info/UserMainInfo.vue';
 
 const route = useRoute();
 
