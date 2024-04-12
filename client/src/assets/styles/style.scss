@@ -15,6 +15,7 @@
 }
 
 body {
+  overflow-x: hidden;
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
@@ -37,7 +38,7 @@ a {
 }
 
 main.main-container {
-  padding: 2rem 1rem;
+  padding: 0 1rem;
 }
 
 .main-container {

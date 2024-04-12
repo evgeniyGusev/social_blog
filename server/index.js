@@ -41,6 +41,8 @@ app.get('*', (req, res) => res.sendFile(path.join(staticDir, 'index.html')));
 mongoose
   .connect(process.env.DB_URI)
   .then(() => {
+    console.log('DATABASE OK');
+
     app.listen(4444, (err) => {
       if (err) {
         return console.log(err);

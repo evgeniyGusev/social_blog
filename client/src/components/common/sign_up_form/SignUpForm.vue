@@ -57,7 +57,6 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, email, helpers } from '@vuelidate/validators';
 
 import { AuthApi } from '@/lib/api/auth';
-import fileToBase64 from '@/helpers/file_to_base64.ts';
 import { objectToFormData } from '@/helpers/object_to_form_data.ts';
 
 import { IModel } from '@/components/common/sign_up_form/interfaces.ts';
@@ -107,19 +106,11 @@ async function submit(): Promise<void> {
     try {
       isFormSending.value = true;
 
-      const avatar: File | string = model.avatar || import.meta.env.VITE_DEFAULT_AVATAR;
-
-      // if (model.avatar) {
-      //   avatar = model.avatar;
-      // } else {
-      //   avatar = import.meta.env.VITE_DEFAULT_AVATAR;
-      // }
-
       const payload = objectToFormData({
         email: model.email,
         password: model.password,
         name: model.name,
-        avatar,
+        avatar: model.avatar,
       });
 
       const { data }: ISignUpResponse = await AuthApi.signUp(payload);

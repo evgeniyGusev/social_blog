@@ -28,6 +28,7 @@ const closeDialog = (event: Event) => {
 
 <style scoped lang="scss">
 .dialog {
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;

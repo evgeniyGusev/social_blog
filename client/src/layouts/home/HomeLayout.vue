@@ -69,6 +69,8 @@ const leftSideNavList = ref([
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 
   .left-aside {
     position: sticky;

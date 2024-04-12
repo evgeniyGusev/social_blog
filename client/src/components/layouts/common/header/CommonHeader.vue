@@ -24,6 +24,7 @@ import UserHeaderState from '@/components/layouts/common/header/components/user_
   padding: 1rem 0;
   border-bottom: 1px solid $color-secondary;
   background-color: #fff;
+  z-index: 1;
 
   .main-container {
     display: flex;

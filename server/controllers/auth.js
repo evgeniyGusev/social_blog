@@ -17,7 +17,14 @@ export const signUpController = async (req, res) => {
     }
 
     const { email, password, name } = req.body;
-    const avatar = req.file?.originalname ?? req.body.avatar;
+
+    console.log(req.file);
+
+    let avatar = req.file?.originalname ?? req.body.avatar;
+
+    if (!avatar) {
+      avatar = 'default.svg';
+    }
 
     const salt = bcryptjs.genSaltSync(10);
     const passwordHash = bcryptjs.hashSync(password, salt);

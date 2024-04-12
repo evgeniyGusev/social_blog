@@ -6,7 +6,7 @@
       </keep-alive>
     </ui-dialog>
 
-    <ui-spinner v-if="isUserLoading" height="100%" width="auto" />
+    <ui-spinner v-if="isUserLoading" height="2rem" width="2rem" />
 
     <template v-else-if="!user">
       <ui-button @click="openSignUpDialog"> Создать аккаунт </ui-button>
@@ -15,7 +15,7 @@
 
     <template v-else>
       <span class="user-name">{{ user.name }}</span>
-      <img :src="getAvatar(user.avatar)" :alt="user.name" class="user-avatar" />
+      <img :src="getImage(user.avatar)" :alt="user.name" class="user-avatar" />
       <ui-button rounded template="tertiary"><out-rounded class="logout-icon" @click="logOutHandler" /></ui-button>
     </template>
   </div>
@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router';
 
 import { UserStore } from '@/store/user.ts';
 import { AuthApi } from '@/lib/api/auth';
-import { resolvePathToImg } from '@/helpers/resolve_path_to_media.ts';
+import { getImage } from '@/helpers/get_image.ts';
 
 import SignInForm from '@/components/common/sign_in_form/SignInForm.vue';
 import SignUpForm from '@/components/common/sign_up_form/SignUpForm.vue';
@@ -68,10 +68,6 @@ async function logOutHandler() {
   } catch (e) {
     Toast.error('Не удалось выйти из аккаунта');
   }
-}
-
-function getAvatar(avatar: string): string {
-  return avatar.startsWith('data:image') ? avatar : resolvePathToImg(avatar);
 }
 </script>
 

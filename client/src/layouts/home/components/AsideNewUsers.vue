@@ -3,10 +3,14 @@
     <p class="new-users-title">Новые пользователи:</p>
     <ul class="new-users-list">
       <li v-for="item in list" :key="item._id" class="new-users-item">
-        <a href="#" class="new-users-link">
-          <img :src="item.avatar" :alt="item.name" class="new-users-avatar" />
+        <router-link :to="{ name: 'users-id', params: { id: item._id } }" class="new-users-link">
+          <img
+            :src="getImage(item.avatar)"
+            :alt="item.name"
+            :class="['new-users-avatar', { _scalable: item.avatar !== 'default.svg' }]"
+          />
           <span class="new-users-name">{{ item.name }}</span>
-        </a>
+        </router-link>
       </li>
     </ul>
   </section>
@@ -14,6 +18,7 @@
 
 <script setup lang="ts">
 import { INewUsersList } from '@/interfaces/common_interfaces.ts';
+import { getImage } from '@/helpers/get_image.ts';
 
 defineProps<{
   list: INewUsersList[] | [];
@@ -43,6 +48,10 @@ defineProps<{
     transition: all 0.2s ease;
 
     &:hover {
+      ._scalable {
+        transform: scale(1.5);
+      }
+
       .new-users-name {
         text-decoration: underline;
         text-decoration-color: $color-primary;
@@ -62,6 +71,7 @@ defineProps<{
     width: 2rem;
     height: 2rem;
     border-radius: 100%;
+    transition: all 0.2s ease;
   }
 }
 </style>
