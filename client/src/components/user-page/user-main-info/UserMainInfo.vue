@@ -6,7 +6,13 @@
       <h3 class="user-main-info-name">{{ user.name }}</h3>
       <p class="user-main-info-email">{{ user.email }}</p>
 
-      <ui-button v-if="!me?.friends?.includes?.(user._id)" template="tertiary" rounded @click="addToFriends">
+      <ui-button
+        v-if="!me?.friends?.includes?.(user._id)"
+        template="tertiary"
+        rounded
+        aria-label="Добавить в друзья"
+        @click="addToFriends"
+      >
         <user-plus-icon class="user-friend-icon" />
       </ui-button>
 
@@ -14,8 +20,10 @@
         v-else
         template="tertiary"
         rounded
+        aria-label="Удалить из друзей"
         @mouseenter="activeIcon = UserXMarkIcon"
         @mouseleave="activeIcon = UserCheckIcon"
+        @click="removeFromFriends"
       >
         <component :is="activeIcon" class="user-friend-icon" />
       </ui-button>
@@ -55,7 +63,21 @@ async function addToFriends(): Promise<void> {
 
     activeIcon.value = UserCheckIcon;
   } catch (e: any) {
-    Toast.error(e);
+    Toast.error(e.response.data.error);
+  }
+}
+
+async function removeFromFriends(): Promise<void> {
+  try {
+    const { data } = await UserApi.removeUserFromFriends(props.user._id);
+
+    Toast.success('Пользователь удален из друзей');
+
+    if (me.value) {
+      me.value.friends = data.user.friends;
+    }
+  } catch (e: any) {
+    Toast.error(e.response.data.error);
   }
 }
 </script>

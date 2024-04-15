@@ -18,9 +18,14 @@ function addUserToFriends(id: string | string[]): Promise<ICurrentUserResponse> 
   return axios.post(`/api/users/add_friend`, { id });
 }
 
+function removeUserFromFriends(id: string | string[]): Promise<ICurrentUserResponse> {
+  return axios.post(`/api/users/remove_friend`, { id });
+}
+
 export const UserApi = {
   fetchCurrentUser,
   fetchNewUsers,
   fetchUserById,
   addUserToFriends,
+  removeUserFromFriends,
 };
