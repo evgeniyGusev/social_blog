@@ -1,5 +1,13 @@
 <template>
   <div class="user-state">
+    <ui-confirm-dialog ref="dialog" :loading="isLogouLoading">
+      <template #header>
+        <div class="user-state-logout-header">Выход</div>
+      </template>
+
+      <div class="user-state-logout-body">Вы действительно хотите выйти?</div>
+    </ui-confirm-dialog>
+
     <ui-dialog v-model="isModalOpen">
       <keep-alive>
         <component :is="currentModal" @change-mode="changeMode" @close="isModalOpen = false" />
@@ -15,8 +23,12 @@
 
     <template v-else>
       <span class="user-name">{{ user.name }}</span>
+
       <img :src="getImage(user.avatar)" :alt="user.name" class="user-avatar" />
-      <ui-button rounded template="tertiary"><out-rounded class="logout-icon" @click="logOutHandler" /></ui-button>
+
+      <ui-button rounded template="tertiary" @click="logOutHandler">
+        <out-rounded class="logout-icon" />
+      </ui-button>
     </template>
   </div>
 </template>
@@ -35,13 +47,17 @@ import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
 import Toast from '@/components/ui/ui_toast/toast.ts';
 
 import OutRounded from '@/assets/icons/out-rounded.svg?component';
+import UiConfirmDialog from '@/components/ui/ui_confirm_dialog/UiConfirmDialog.vue';
 
 const router = useRouter();
 const { user, isUserLoading } = UserStore;
 
+const dialog = ref<InstanceType<typeof UiConfirmDialog> | null>();
+
 const isModalOpen = ref(false);
 const modalMode = ref<'signIn' | 'signUp'>('signIn');
 const currentModal = computed(() => (modalMode.value === 'signIn' ? SignInForm : SignUpForm));
+const isLogouLoading = ref(false);
 
 function openSignInDialog() {
   modalMode.value = 'signIn';
@@ -57,17 +73,26 @@ function changeMode(mode: 'signIn' | 'signUp'): void {
   modalMode.value = mode;
 }
 
-async function logOutHandler() {
-  try {
-    await AuthApi.signOut();
+function logOutHandler() {
+  dialog.value
+    ?.open()
+    .then(async () => {
+      try {
+        isLogouLoading.value = true;
 
-    Toast.success('Вы вышли из аккаунта');
-    UserStore.clearUser();
+        await AuthApi.signOut();
 
-    await router.push({ name: 'guest' });
-  } catch (e) {
-    Toast.error('Не удалось выйти из аккаунта');
-  }
+        Toast.success('Вы вышли из аккаунта');
+        UserStore.clearUser();
+
+        await router.push({ name: 'guest' });
+      } catch (e) {
+        Toast.error('Не удалось выйти из аккаунта');
+      } finally {
+        isLogouLoading.value = false;
+      }
+    })
+    .catch(() => false);
 }
 </script>
 
@@ -86,6 +111,19 @@ async function logOutHandler() {
   .logout-icon {
     width: 1.5rem;
     height: 1.5rem;
+  }
+
+  &-logout-header {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &-logout-body {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
   }
 }
 </style>
