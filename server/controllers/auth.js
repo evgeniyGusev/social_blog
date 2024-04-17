@@ -75,7 +75,7 @@ export const signInController = async (req, res) => {
 
         res.set(
           'Set-Cookie',
-          `access_token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24 * 7}`
+          `access_token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24}`
         );
 
         return res.json({

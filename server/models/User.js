@@ -16,8 +16,12 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     avatar: String,
-    favs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    invoices: {
+      in: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+      out: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    },
+    favs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
   },
   {
     timestamps: true,

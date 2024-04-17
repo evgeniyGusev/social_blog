@@ -5,9 +5,13 @@ export interface ICurrentUser {
   avatar: string;
   favs: string[];
   friends: string[];
+  invoices: {
+    in: string[];
+    out: string[];
+  };
   createdAt: string;
   updatedAt: string;
-  __v: number;
+  __v?: number;
 }
 
 export interface ICurrentUserResponse {

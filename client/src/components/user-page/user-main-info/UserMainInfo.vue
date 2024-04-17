@@ -6,8 +6,23 @@
       <h3 class="user-main-info-name">{{ user.name }}</h3>
       <p class="user-main-info-email">{{ user.email }}</p>
 
+      <div v-if="me?.invoices?.out?.includes?.(user._id)" class="user-main-info-invoice-panel">
+        <user-refresh-icon class="user-friend-icon" />
+
+        <ui-button size="small" template="tertiary" aria-label="Отменить заявку"> Отменить заявку </ui-button>
+      </div>
+
+      <div v-else-if="me?.invoices?.in?.includes?.(user._id)" class="user-main-info-invoice-panel invoice-in">
+        <div class="user-main-info-invoice-in-head">Пользователь оставил заявку в друзья</div>
+
+        <div class="invoice-in-buttons">
+          <ui-button size="small" aria-label="Принять заявку"> Принять </ui-button>
+          <ui-button size="small" template="secondary" aria-label="Отклонить заявку"> Отклонить </ui-button>
+        </div>
+      </div>
+
       <ui-button
-        v-if="!me?.friends?.includes?.(user._id)"
+        v-else-if="!me?.friends?.includes?.(user._id)"
         template="tertiary"
         rounded
         aria-label="Добавить в друзья"
@@ -41,9 +56,11 @@ import { UserApi } from '@/lib/api/user';
 import { IUserForPresent } from '@/lib/api/user/interfaces.ts';
 
 import Toast from '@/components/ui/ui_toast/toast.ts';
+
 import UserPlusIcon from '@/assets/icons/user-plus.svg?component';
 import UserCheckIcon from '@/assets/icons/user-check.svg?component';
 import UserXMarkIcon from '@/assets/icons/user-xmark.svg?component';
+import UserRefreshIcon from '@/assets/icons/user-refresh.svg?component';
 
 const props = defineProps<{ user: IUserForPresent }>();
 
@@ -55,10 +72,10 @@ async function addToFriends(): Promise<void> {
   try {
     const { data } = await UserApi.addUserToFriends(props.user._id);
 
-    Toast.success('Пользователь добавлен в друзья');
+    Toast.success('Заявка на добавление в друзья отправлена');
 
     if (me.value) {
-      me.value.friends = data.user.friends;
+      me.value.invoices.out = data.user.invoices.out;
     }
 
     activeIcon.value = UserCheckIcon;
@@ -117,6 +134,29 @@ async function removeFromFriends(): Promise<void> {
     margin-bottom: 1rem;
     font-size: 1.1rem;
     color: $color-secondary;
+  }
+
+  &-invoice-panel {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+
+    &.invoice-in {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+
+      .user-main-info-invoice-in-head {
+        padding: 0.1rem 0.5rem;
+        border-radius: $default-radius;
+        background-color: $color-green-light;
+      }
+
+      .invoice-in-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
   }
 }
 </style>
