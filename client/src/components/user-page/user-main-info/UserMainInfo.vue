@@ -13,6 +13,7 @@
           size="small"
           template="tertiary"
           aria-label="Отменить заявку"
+          :disabled="isRequestLoading"
           :is-loading="isRequestLoading"
           @click="cancelInvoice"
         >
@@ -24,7 +25,13 @@
         <div class="user-main-info-invoice-in-head">Пользователь оставил заявку в друзья</div>
 
         <div class="invoice-in-buttons">
-          <ui-button size="small" aria-label="Принять заявку" :is-loading="isRequestLoading" @click="acceptInvoice">
+          <ui-button
+            size="small"
+            aria-label="Принять заявку"
+            :is-loading="isRequestLoading"
+            :disabled="isRequestLoading"
+            @click="acceptInvoice"
+          >
             Принять
           </ui-button>
 
@@ -32,6 +39,7 @@
             size="small"
             template="secondary"
             aria-label="Отклонить заявку"
+            :disabled="isRequestLoading"
             :is-loading="isRequestLoading"
             @click="declineInvoice"
           >
@@ -45,6 +53,7 @@
         template="tertiary"
         rounded
         aria-label="Добавить в друзья"
+        :disabled="isRequestLoading"
         :is-loading="isRequestLoading"
         @click="addToFriends"
       >
@@ -57,6 +66,7 @@
         rounded
         aria-label="Удалить из друзей"
         :is-loading="isRequestLoading"
+        :disabled="isRequestLoading"
         @mouseenter="activeIcon = UserXMarkIcon"
         @mouseleave="activeIcon = UserCheckIcon"
         @click="removeFromFriends"

@@ -15,12 +15,16 @@
         'ui-button--danger': template === 'danger',
         'ui-button--disabled': disabled,
         'ui-button--rounded': rounded,
+        'ui-button--is-loading': isLoading,
       },
     ]"
     :disabled="disabled"
   >
-    <slot v-if="!isLoading"></slot>
-    <UiSpinner v-else />
+    <div class="ui-button-text">
+      <slot></slot>
+    </div>
+
+    <UiSpinner v-if="isLoading" class="ui-button-spinner" />
   </button>
 </template>
 
@@ -36,6 +40,7 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
 <style scoped lang="scss">
 .ui-button {
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -50,6 +55,24 @@ withDefaults(defineProps<IUiButtonProps>(), {
     outline: #000 solid 3px;
   }
 
+  .ui-button-text {
+    display: flex;
+    align-items: center;
+  }
+
+  &--disabled {
+    .ui-button-text {
+      opacity: 0.3;
+    }
+  }
+
+  &-spinner {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    transform: translate(-50%, -42%);
+  }
+
   &--small {
     padding: 0.25rem 0.5rem;
   }
@@ -60,23 +83,27 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
   &--primary {
     background-color: $color-primary;
-    color: #fff;
+
+    .ui-button-text {
+      color: #fff;
+    }
 
     &:not(:disabled):hover {
       background-color: $color-light;
-      color: #000;
+
+      .ui-button-text {
+        color: $color-primary;
+      }
     }
 
     &.ui-button--disabled {
       background-color: $color-light;
-      color: $color-secondary;
       cursor: not-allowed;
     }
   }
 
   &--secondary {
     background-color: #fff;
-    color: $color-primary;
     border-color: $color-primary;
 
     &:not(:disabled):hover {
@@ -86,14 +113,12 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
     &.ui-button--disabled {
       border-color: $color-light;
-      color: $color-secondary;
       cursor: not-allowed;
     }
   }
 
   &--tertiary {
     background-color: #fff;
-    color: $color-primary;
     border-color: transparent;
     transition: background-color 0.2s ease-in-out;
 
@@ -102,7 +127,6 @@ withDefaults(defineProps<IUiButtonProps>(), {
     }
 
     &.ui-button--disabled {
-      color: $color-secondary;
       cursor: not-allowed;
     }
   }
@@ -110,7 +134,6 @@ withDefaults(defineProps<IUiButtonProps>(), {
   &--link {
     padding: 0;
     background-color: transparent;
-    color: $color-primary;
     border-color: transparent;
     text-decoration: underline;
     text-decoration-color: $color-primary;
@@ -121,7 +144,6 @@ withDefaults(defineProps<IUiButtonProps>(), {
     }
 
     &.ui-button--disabled {
-      color: $color-secondary;
       text-decoration-color: $color-secondary;
       cursor: not-allowed;
     }
@@ -130,6 +152,10 @@ withDefaults(defineProps<IUiButtonProps>(), {
   &--rounded {
     border-radius: 100%;
     padding: 0;
+
+    .ui-button-spinner {
+      left: 25%;
+    }
   }
 }
 </style>
