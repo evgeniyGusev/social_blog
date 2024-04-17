@@ -22,10 +22,25 @@ function removeUserFromFriends(id: string | string[]): Promise<ICurrentUserRespo
   return axios.post(`/api/users/remove_friend`, { id });
 }
 
+function cancelInvoice(id: string): Promise<ICurrentUserResponse> {
+  return axios.get(`/api/users/cancel_friend_request/${id}`);
+}
+
+function acceptInvoice(id: string): Promise<ICurrentUserResponse> {
+  return axios.get(`/api/users/accept_friend_request/${id}`);
+}
+
+function declineInvoice(id: string): Promise<ICurrentUserResponse> {
+  return axios.get(`/api/users/decline_friend_request/${id}`);
+}
+
 export const UserApi = {
   fetchCurrentUser,
   fetchNewUsers,
   fetchUserById,
   addUserToFriends,
   removeUserFromFriends,
+  cancelInvoice,
+  acceptInvoice,
+  declineInvoice,
 };

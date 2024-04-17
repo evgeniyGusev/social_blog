@@ -9,15 +9,34 @@
       <div v-if="me?.invoices?.out?.includes?.(user._id)" class="user-main-info-invoice-panel">
         <user-refresh-icon class="user-friend-icon" />
 
-        <ui-button size="small" template="tertiary" aria-label="Отменить заявку"> Отменить заявку </ui-button>
+        <ui-button
+          size="small"
+          template="tertiary"
+          aria-label="Отменить заявку"
+          :is-loading="isRequestLoading"
+          @click="cancelInvoice"
+        >
+          Отменить заявку
+        </ui-button>
       </div>
 
       <div v-else-if="me?.invoices?.in?.includes?.(user._id)" class="user-main-info-invoice-panel invoice-in">
         <div class="user-main-info-invoice-in-head">Пользователь оставил заявку в друзья</div>
 
         <div class="invoice-in-buttons">
-          <ui-button size="small" aria-label="Принять заявку"> Принять </ui-button>
-          <ui-button size="small" template="secondary" aria-label="Отклонить заявку"> Отклонить </ui-button>
+          <ui-button size="small" aria-label="Принять заявку" :is-loading="isRequestLoading" @click="acceptInvoice">
+            Принять
+          </ui-button>
+
+          <ui-button
+            size="small"
+            template="secondary"
+            aria-label="Отклонить заявку"
+            :is-loading="isRequestLoading"
+            @click="declineInvoice"
+          >
+            Отклонить
+          </ui-button>
         </div>
       </div>
 
@@ -26,6 +45,7 @@
         template="tertiary"
         rounded
         aria-label="Добавить в друзья"
+        :is-loading="isRequestLoading"
         @click="addToFriends"
       >
         <user-plus-icon class="user-friend-icon" />
@@ -36,6 +56,7 @@
         template="tertiary"
         rounded
         aria-label="Удалить из друзей"
+        :is-loading="isRequestLoading"
         @mouseenter="activeIcon = UserXMarkIcon"
         @mouseleave="activeIcon = UserCheckIcon"
         @click="removeFromFriends"
@@ -67,25 +88,32 @@ const props = defineProps<{ user: IUserForPresent }>();
 const { user: me } = UserStore;
 
 const activeIcon = ref(UserCheckIcon);
+const isRequestLoading = ref(false);
 
 async function addToFriends(): Promise<void> {
   try {
+    isRequestLoading.value = true;
+
     const { data } = await UserApi.addUserToFriends(props.user._id);
 
     Toast.success('Заявка на добавление в друзья отправлена');
 
     if (me.value) {
-      me.value.invoices.out = data.user.invoices.out;
+      me.value.invoices = data.user.invoices;
     }
 
     activeIcon.value = UserCheckIcon;
   } catch (e: any) {
     Toast.error(e.response.data.error);
+  } finally {
+    isRequestLoading.value = false;
   }
 }
 
 async function removeFromFriends(): Promise<void> {
   try {
+    isRequestLoading.value = true;
+
     const { data } = await UserApi.removeUserFromFriends(props.user._id);
 
     Toast.success('Пользователь удален из друзей');
@@ -95,6 +123,64 @@ async function removeFromFriends(): Promise<void> {
     }
   } catch (e: any) {
     Toast.error(e.response.data.error);
+  } finally {
+    isRequestLoading.value = false;
+  }
+}
+
+async function cancelInvoice(): Promise<void> {
+  try {
+    isRequestLoading.value = true;
+
+    const { data } = await UserApi.cancelInvoice(props.user._id);
+
+    Toast.success('Заявка отменена');
+
+    if (me.value) {
+      me.value.invoices = data.user.invoices;
+    }
+  } catch (e: any) {
+    Toast.error(e.response.data.error);
+  } finally {
+    isRequestLoading.value = false;
+  }
+}
+
+async function acceptInvoice(): Promise<void> {
+  try {
+    isRequestLoading.value = true;
+
+    const { data } = await UserApi.acceptInvoice(props.user._id);
+
+    Toast.success('Заявка принята');
+
+    if (me.value) {
+      me.value.invoices = data.user.invoices;
+      me.value.friends = data.user.friends;
+    }
+  } catch (e: any) {
+    Toast.error(e.response.data.error);
+  } finally {
+    isRequestLoading.value = false;
+  }
+}
+
+async function declineInvoice(): Promise<void> {
+  try {
+    isRequestLoading.value = true;
+
+    const { data } = await UserApi.declineInvoice(props.user._id);
+
+    Toast.success('Заявка отклонена');
+
+    if (me.value) {
+      me.value.invoices = data.user.invoices;
+      me.value.friends = data.user.friends;
+    }
+  } catch (e: any) {
+    Toast.error(e.response.data.error);
+  } finally {
+    isRequestLoading.value = false;
   }
 }
 </script>
