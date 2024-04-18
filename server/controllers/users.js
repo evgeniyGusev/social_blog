@@ -1,16 +1,16 @@
 import UserModel from '../models/User.js';
+import { getUsersById } from '../helpers/get_users.js';
+import { ApiError } from '../helpers/api_errors.js';
 
 export const getNewUsersController = async (req, res) => {
   try {
-    const currentUser = await UserModel.findById({ _id: req.userId });
+    const { currentUser } = await getUsersById({ currentId: req.userId });
     const users = await UserModel.find({ _id: { $ne: currentUser._id } }).limit(
       5
     );
 
     if (!users) {
-      return res
-        .status(404)
-        .json({ access: false, error: 'Пользователи не найдены' });
+      return ApiError.userNotFound(res);
     }
 
     return res.status(200).json({
@@ -18,18 +18,16 @@ export const getNewUsersController = async (req, res) => {
       data: users.map(({ _id, name, avatar }) => ({ _id, name, avatar })),
     });
   } catch (e) {
-    res.status(404).json({ access: false, error: e.message });
+    ApiError.commonServerError(res);
   }
 };
 
 export const getUserByIdController = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.params.id);
+    const { user } = await getUsersById({ id: req.params.id });
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ access: false, error: 'Пользователь не найден' });
+      ApiError.userNotFound(res);
     }
 
     const { passwordHash, favs, __v, invoices, ...userRes } = user._doc;
@@ -39,19 +37,19 @@ export const getUserByIdController = async (req, res) => {
       user: userRes,
     });
   } catch (e) {
-    res.status(500).json({ access: false, error: 'Пользователь не найден' });
+    ApiError.commonServerError(res);
   }
 };
 
 export const addUserToFriendsController = async (req, res) => {
   try {
-    const currentUser = await UserModel.findById(req.userId);
-    const user = await UserModel.findById(req.body.id);
+    const { currentUser, user } = await getUsersById({
+      currentId: req.userId,
+      id: req.body.id,
+    });
 
     if (!user || !currentUser) {
-      return res
-        .status(404)
-        .json({ access: false, error: 'Пользователь не найден' });
+      return ApiError.userNotFound(res);
     }
 
     if (currentUser.friends.includes(user._id)) {
@@ -85,8 +83,10 @@ export const addUserToFriendsController = async (req, res) => {
 
 export const cancelFriendRequestController = async (req, res) => {
   try {
-    const currentUser = await UserModel.findById(req.userId);
-    const user = await UserModel.findById(req.params.id);
+    const { currentUser, user } = await getUsersById({
+      currentId: req.userId,
+      id: req.params.id,
+    });
 
     const invoiceOut = currentUser.invoices.out.find((id) =>
       id.equals(user._id)
@@ -119,13 +119,13 @@ export const cancelFriendRequestController = async (req, res) => {
 
 export const acceptFriendRequestController = async (req, res) => {
   try {
-    const currentUser = await UserModel.findById(req.userId);
-    const user = await UserModel.findById(req.params.id);
+    const { currentUser, user } = await getUsersById({
+      currentId: req.userId,
+      id: req.params.id,
+    });
 
     if (!user || !currentUser) {
-      return res
-        .status(404)
-        .json({ access: false, error: 'Пользователь не найден' });
+      return ApiError.userNotFound(res);
     }
 
     if (
@@ -160,13 +160,13 @@ export const acceptFriendRequestController = async (req, res) => {
 
 export const declineFriendRequestController = async (req, res) => {
   try {
-    const currentUser = await UserModel.findById(req.userId);
-    const user = await UserModel.findById(req.params.id);
+    const { currentUser, user } = await getUsersById({
+      currentId: req.userId,
+      id: req.params.id,
+    });
 
     if (!user || !currentUser) {
-      return res
-        .status(404)
-        .json({ access: false, error: 'Пользователь не найден' });
+      return ApiError.userNotFound(res);
     }
 
     if (
@@ -198,8 +198,10 @@ export const declineFriendRequestController = async (req, res) => {
 
 export const removeUserFromFriendsController = async (req, res) => {
   try {
-    const currentUser = await UserModel.findById(req.userId);
-    const user = await UserModel.findById(req.body.id);
+    const { currentUser, user } = await getUsersById({
+      currentId: req.userId,
+      id: req.body.id,
+    });
 
     if (!user || !currentUser) {
       return res
