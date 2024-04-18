@@ -13,15 +13,13 @@
     <router-view />
 
     <aside class="right-aside">
-      <aside-new-users v-if="newUsers.length" :list="newUsers" />
+      <aside-new-users />
     </aside>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-
-import useNewUsers from '@/layouts/home/composables/use_new_users.ts';
 
 import LeftSideMenuList from '@/layouts/home/components/LeftSideMenuList.vue';
 import AsideNewUsers from '@/layouts/home/components/AsideNewUsers.vue';
@@ -32,8 +30,6 @@ import UsersIcon from '@/assets/icons/users.svg?component';
 import HeartIcon from '@/assets/icons/heart.svg?component';
 import PlusPostIcon from '@/assets/icons/plus-post.svg?component';
 import SettingsIcon from '@/assets/icons/settings.svg?component';
-
-const { newUsers } = useNewUsers();
 
 const leftSideNavList = ref([
   {

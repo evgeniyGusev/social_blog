@@ -12,11 +12,10 @@
 import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { UserApi } from '@/lib/api/user';
-
-import { IUserForPresent } from '@/lib/api/user/interfaces.ts';
+import { IUserForPresent } from '@/lib/api/curren_user/interfaces.ts';
 
 import UserMainInfo from '@/components/user-page/user-main-info/UserMainInfo.vue';
+import { UsersApi } from '@/lib/api/users';
 
 const route = useRoute();
 
@@ -27,7 +26,7 @@ watchEffect(async () => {
   try {
     isUserLoading.value = true;
 
-    const { data } = await UserApi.fetchUserById(route.params.id);
+    const { data } = await UsersApi.fetchUserById(route.params.id);
 
     user.value = data.user;
   } catch (e) {

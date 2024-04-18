@@ -1,8 +1,13 @@
 <template>
   <section class="new-users">
     <p class="new-users-title">Новые пользователи:</p>
-    <ul class="new-users-list">
-      <li v-for="item in list" :key="item._id" class="new-users-item">
+
+    <ui-spinner v-if="state.isNewUsersLoading" width="3rem" height="3rem" />
+
+    <div v-else-if="!state.newUsers.length">Нет новых пользователей</div>
+
+    <ul v-else class="new-users-list">
+      <li v-for="item in state.newUsers" :key="item._id" class="new-users-item">
         <router-link :to="{ name: 'users-id', params: { id: item._id } }" class="new-users-link">
           <img
             :src="getImage(item.avatar)"
@@ -17,12 +22,17 @@
 </template>
 
 <script setup lang="ts">
-import { INewUsersList } from '@/interfaces/common_interfaces.ts';
-import { getImage } from '@/helpers/get_image.ts';
+import { onMounted } from 'vue';
 
-defineProps<{
-  list: INewUsersList[] | [];
-}>();
+import { getImage } from '@/helpers/get_image.ts';
+import { UsersStore } from '@/store/users';
+
+const {
+  state,
+  actions: { getNewUsers },
+} = UsersStore;
+
+onMounted(getNewUsers);
 </script>
 
 <style scoped lang="scss">

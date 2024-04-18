@@ -14,17 +14,21 @@
       </keep-alive>
     </ui-dialog>
 
-    <ui-spinner v-if="isUserLoading" height="2rem" width="2rem" />
+    <ui-spinner v-if="currentUserState.isUserLoading" height="2rem" width="2rem" />
 
-    <template v-else-if="!user">
+    <template v-else-if="!currentUserState.currentUser">
       <ui-button @click="openSignUpDialog"> Создать аккаунт </ui-button>
       <ui-button template="secondary" @click="openSignInDialog">Войти</ui-button>
     </template>
 
     <template v-else>
-      <span class="user-name">{{ user.name }}</span>
+      <span class="user-name">{{ currentUserState.currentUser.name }}</span>
 
-      <img :src="getImage(user.avatar)" :alt="user.name" class="user-avatar" />
+      <img
+        :src="getImage(currentUserState.currentUser.avatar)"
+        :alt="currentUserState.currentUser.name"
+        class="user-avatar"
+      />
 
       <ui-button rounded template="tertiary" @click="logOutHandler">
         <out-rounded class="logout-icon" />
@@ -37,7 +41,7 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { UserStore } from '@/store/user.ts';
+import { CurrentUserStore } from '@/store/current_user/';
 import { AuthApi } from '@/lib/api/auth';
 import { getImage } from '@/helpers/get_image.ts';
 
@@ -50,7 +54,7 @@ import OutRounded from '@/assets/icons/out-rounded.svg?component';
 import UiConfirmDialog from '@/components/ui/ui_confirm_dialog/UiConfirmDialog.vue';
 
 const router = useRouter();
-const { user, isUserLoading } = UserStore;
+const { state: currentUserState, actions } = CurrentUserStore;
 
 const dialog = ref<InstanceType<typeof UiConfirmDialog> | null>();
 
@@ -83,7 +87,7 @@ function logOutHandler() {
         await AuthApi.signOut();
 
         Toast.success('Вы вышли из аккаунта');
-        UserStore.clearUser();
+        actions.clearUser();
 
         await router.push({ name: 'guest' });
       } catch (e) {

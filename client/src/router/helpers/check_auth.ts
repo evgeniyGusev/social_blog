@@ -1,29 +1,14 @@
-import { UserStore } from '@/store/user.ts';
-import { UserApi } from '@/lib/api/user';
+import { CurrentUserStore } from '@/store/current_user/';
 
-import { ICurrentUserResponse } from '@/interfaces/common_interfaces.ts';
-
-const { user, isUserLoading } = UserStore;
+const { state, actions } = CurrentUserStore;
 
 export default async function checkAuth(): Promise<boolean> {
-  if (!user.value) {
+  if (!state.currentUser) {
     try {
-      isUserLoading.value = true;
-
-      const { data }: ICurrentUserResponse = await UserApi.fetchCurrentUser();
-
-      if (data.access) {
-        user.value = data.user;
-      }
-
-      isUserLoading.value = false;
+      await actions.getCurrentUser();
 
       return true;
     } catch (e) {
-      console.warn(e);
-
-      isUserLoading.value = false;
-
       return false;
     }
   } else {

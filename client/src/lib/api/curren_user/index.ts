@@ -1,17 +1,9 @@
 import axios from 'axios';
-import { ICurrentUserResponse, INewUsersResponse } from '@/interfaces/common_interfaces';
-import { IUsersByIdResponse } from '@/lib/api/user/interfaces.ts';
+
+import { ICurrentUserResponse } from '@/interfaces/common_interfaces';
 
 function fetchCurrentUser(): Promise<ICurrentUserResponse> {
   return axios.get('/api/auth/me');
-}
-
-function fetchNewUsers(): Promise<INewUsersResponse> {
-  return axios.get('/api/users/new');
-}
-
-function fetchUserById(id: string | string[]): Promise<IUsersByIdResponse> {
-  return axios.get(`/api/users/${id}`);
 }
 
 function addUserToFriends(id: string | string[]): Promise<ICurrentUserResponse> {
@@ -34,10 +26,8 @@ function declineInvoice(id: string): Promise<ICurrentUserResponse> {
   return axios.get(`/api/users/decline_friend_request/${id}`);
 }
 
-export const UserApi = {
+export const CurrentUserApi = {
   fetchCurrentUser,
-  fetchNewUsers,
-  fetchUserById,
   addUserToFriends,
   removeUserFromFriends,
   cancelInvoice,
