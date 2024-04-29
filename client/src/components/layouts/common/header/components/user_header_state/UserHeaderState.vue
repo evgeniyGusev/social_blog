@@ -1,11 +1,9 @@
 <template>
   <div class="user-state">
     <ui-confirm-dialog ref="dialog" :loading="isLogouLoading">
-      <template #header>
-        <div class="user-state-logout-header">Выход</div>
-      </template>
+      <template #header> Выход </template>
 
-      <div class="user-state-logout-body">Вы действительно хотите выйти?</div>
+      Вы действительно хотите выйти?
     </ui-confirm-dialog>
 
     <ui-dialog v-model="isModalOpen">
@@ -30,7 +28,13 @@
         class="user-avatar"
       />
 
-      <ui-button rounded template="tertiary" @click="logOutHandler">
+      <ui-button
+        rounded
+        template="tertiary"
+        :disabled="isLogouLoading"
+        :is-loading="isLogouLoading"
+        @click="logOutHandler"
+      >
         <out-rounded class="logout-icon" />
       </ui-button>
     </template>
@@ -115,19 +119,6 @@ function logOutHandler() {
   .logout-icon {
     width: 1.5rem;
     height: 1.5rem;
-  }
-
-  &-logout-header {
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    text-align: center;
-    font-weight: 700;
-  }
-
-  &-logout-body {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    text-align: center;
   }
 }
 </style>

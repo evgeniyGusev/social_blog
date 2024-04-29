@@ -2,11 +2,11 @@
   <section class="main-page-wrapper">
     <aside class="left-aside">
       <nav class="left-side-nav">
-        <LeftSideMenuList :list="leftSideNavList" />
+        <left-side-menu-list :list="leftSideNavList" />
       </nav>
 
       <ui-button template="secondary" class="add-post-button">
-        <PlusPostIcon class="add-post-icon" /> Добавить пост
+        <plus-post-icon class="add-post-icon" /> Добавить пост
       </ui-button>
     </aside>
 
@@ -28,7 +28,7 @@ import HouseIcon from '@/assets/icons/house.svg?component';
 import ClipboardIcon from '@/assets/icons/clipboard.svg?component';
 import UsersIcon from '@/assets/icons/users.svg?component';
 import HeartIcon from '@/assets/icons/heart.svg?component';
-import PlusPostIcon from '@/assets/icons/plus-post.svg?component';
+import PlusPostIcon from '@/assets/icons/plus-rounded.svg?component';
 import SettingsIcon from '@/assets/icons/settings.svg?component';
 
 const leftSideNavList = ref([
@@ -45,7 +45,8 @@ const leftSideNavList = ref([
   {
     title: 'Друзья',
     icon: UsersIcon,
-    link: { name: 'my-friends' },
+    link: { name: 'all-friends' },
+    mainLink: 'my-friends',
   },
   {
     title: 'Избранное',

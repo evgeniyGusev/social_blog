@@ -36,6 +36,24 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
           },
+          children: [
+            {
+              path: 'all-friends',
+              name: 'all-friends',
+              component: () => import('@/pages/user/AllFriends.vue'),
+              meta: {
+                requiresAuth: true,
+              },
+            },
+            {
+              path: 'friends-invoices',
+              name: 'friends-invoices',
+              component: () => import('@/pages/user/FriendsInvoices.vue'),
+              meta: {
+                requiresAuth: true,
+              },
+            },
+          ],
         },
         {
           path: 'my-favorites',

@@ -23,14 +23,11 @@
     <div class="ui-button-text">
       <slot></slot>
     </div>
-
-    <UiSpinner v-if="isLoading" class="ui-button-spinner" />
   </button>
 </template>
 
 <script setup lang="ts">
 import { IUiButtonProps } from './interface';
-import UiSpinner from '@/components/ui/ui_spinner/UiSpinner.vue';
 
 withDefaults(defineProps<IUiButtonProps>(), {
   size: 'medium',
@@ -41,6 +38,7 @@ withDefaults(defineProps<IUiButtonProps>(), {
 <style scoped lang="scss">
 .ui-button {
   position: relative;
+  overflow: hidden;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -155,6 +153,33 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
     .ui-button-spinner {
       left: 25%;
+    }
+  }
+
+  &--is-loading {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      margin: -12px 0 0 -12px;
+      border: 4px solid transparent;
+      border-top: 4px solid $color-primary;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      box-sizing: border-box;
+      transform-origin: 50% 50%;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   }
 }

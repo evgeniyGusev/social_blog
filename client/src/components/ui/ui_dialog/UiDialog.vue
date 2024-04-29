@@ -26,6 +26,12 @@ const closeDialog = (event: Event) => {
 };
 </script>
 
+<style>
+:root {
+  --dialog-content-max-width: 400px;
+}
+</style>
+
 <style scoped lang="scss">
 .dialog {
   z-index: 999;
@@ -41,7 +47,8 @@ const closeDialog = (event: Event) => {
   backdrop-filter: blur(0.3rem);
 
   &-content {
-    width: 364px;
+    min-width: 364px;
+    max-width: var(--dialog-content-max-width);
     padding: 2rem;
     background-color: #fff;
     border-radius: $default-radius;

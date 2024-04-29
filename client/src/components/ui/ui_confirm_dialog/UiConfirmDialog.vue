@@ -1,20 +1,24 @@
 <template>
   <ui-dialog :model-value="isDialogVisible" class="ui-confirm-dialog" :closable="false">
-    <slot name="header">
-      {{ content.head }}
-    </slot>
+    <div class="ui-confirm-dialog-header">
+      <slot name="header">
+        {{ content.head }}
+      </slot>
+    </div>
 
-    <slot>
-      {{ content.body }}
-    </slot>
+    <div class="ui-confirm-dialog-body">
+      <slot>
+        {{ content.body }}
+      </slot>
+    </div>
 
     <nav class="ui-confirm-dialog-buttons">
       <slot name="buttons">
-        <ui-button :disabled="disabled" :loading="loading" size="large" type="button" @click="confirm">
+        <ui-button :disabled="disabled" :loading="loading" type="button" @click="confirm">
           {{ content.confirm }}
         </ui-button>
 
-        <ui-button template="secondary" size="large" type="button" @click="cancel">
+        <ui-button template="secondary" type="button" @click="cancel">
           {{ content.cancel }}
         </ui-button>
       </slot>
@@ -94,9 +98,24 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-.ui-confirm-dialog-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.ui-confirm-dialog {
+  &-header {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &-body {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  &-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 </style>

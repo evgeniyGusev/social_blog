@@ -77,7 +77,7 @@ export const addUserToFriendsController = async (req, res) => {
 
     return res.status(200).json({ access: true, user: userRes });
   } catch (e) {
-    res.status(500).json({ access: false, error: e.message });
+    ApiError.commonServerError(res);
   }
 };
 
@@ -113,7 +113,7 @@ export const cancelFriendRequestController = async (req, res) => {
 
     return res.status(200).json({ access: true, user: userRes });
   } catch (e) {
-    res.status(500).json({ access: false, error: e.message });
+    ApiError.commonServerError(res);
   }
 };
 
@@ -154,7 +154,7 @@ export const acceptFriendRequestController = async (req, res) => {
 
     return res.status(200).json({ access: true, user: userRes });
   } catch (e) {
-    res.status(500).json({ access: false, error: e.message });
+    ApiError.commonServerError(res);
   }
 };
 
@@ -192,7 +192,7 @@ export const declineFriendRequestController = async (req, res) => {
 
     return res.status(200).json({ access: true, user: userRes });
   } catch (e) {
-    res.status(500).json({ access: false, error: e.message });
+    ApiError.commonServerError(res);
   }
 };
 
@@ -204,9 +204,7 @@ export const removeUserFromFriendsController = async (req, res) => {
     });
 
     if (!user || !currentUser) {
-      return res
-        .status(404)
-        .json({ access: false, error: 'Пользователь не найден' });
+      return ApiError.userNotFound(res);
     }
 
     if (!currentUser.friends.includes(user._id)) {
@@ -228,6 +226,70 @@ export const removeUserFromFriendsController = async (req, res) => {
 
     return res.status(200).json({ access: true, user: userRes });
   } catch (e) {
-    res.status(404).json({ access: false, error: e.message });
+    ApiError.commonServerError(res);
+  }
+};
+
+export const getMyActiveFriendsController = async (req, res) => {
+  try {
+    const { currentUser } = await getUsersById({ currentId: req.userId });
+
+    if (!currentUser) {
+      return ApiError.userNotFound(res);
+    }
+
+    let users = await UserModel.find({ _id: { $in: currentUser.friends } });
+
+    users = users.map(({ _id, name, avatar, email }) => ({
+      _id,
+      name,
+      avatar,
+      email,
+    }));
+
+    return res.status(200).json({ access: true, users });
+  } catch (e) {
+    ApiError.commonServerError(res);
+  }
+};
+
+export const getInvoicesUsersController = async (req, res) => {
+  try {
+    const { currentUser } = await getUsersById({ currentId: req.userId });
+
+    if (!currentUser) {
+      return ApiError.userNotFound(res);
+    }
+
+    let usersIn = [];
+    let usersOut = [];
+
+    if (currentUser.invoices.in.length > 0) {
+      usersIn = await UserModel.find({ _id: { $in: currentUser.invoices.in } });
+    }
+
+    if (currentUser.invoices.out.length > 0) {
+      usersOut = await UserModel.find({
+        _id: { $in: currentUser.invoices.out },
+      });
+    }
+
+    usersIn = usersIn.map(({ _id, name, avatar, email }) => ({
+      _id,
+      name,
+      avatar,
+      email,
+    }));
+
+    usersOut = usersOut.map(({ _id, name, avatar, email }) => ({
+      _id,
+      name,
+      avatar,
+      email,
+    }));
+
+    return res.status(200).json({ access: true, data: { usersIn, usersOut } });
+  } catch (e) {
+    ApiError.commonServerError(res);
   }
 };

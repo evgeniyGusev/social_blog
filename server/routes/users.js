@@ -10,6 +10,8 @@ import {
   cancelFriendRequestController,
   acceptFriendRequestController,
   declineFriendRequestController,
+  getMyActiveFriendsController,
+  getInvoicesUsersController,
 } from '../controllers/users.js';
 
 const usersRouter = new Router();
@@ -33,5 +35,7 @@ usersRouter.get(
   checkAuth,
   declineFriendRequestController
 );
+usersRouter.get('/friends/all', checkAuth, getMyActiveFriendsController);
+usersRouter.get('/invoices/all', checkAuth, getInvoicesUsersController);
 
 export default usersRouter;
