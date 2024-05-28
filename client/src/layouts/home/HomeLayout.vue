@@ -5,7 +5,7 @@
         <left-side-menu-list :list="leftSideNavList" />
       </nav>
 
-      <ui-button template="secondary" class="add-post-button">
+      <ui-button template="secondary" class="add-post-button" @click="$router.push({ name: 'new-post' })">
         <plus-post-icon class="add-post-icon" /> Добавить пост
       </ui-button>
     </aside>
@@ -66,6 +66,7 @@ const leftSideNavList = ref([
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem;
+  height: 100%;
   padding-top: 2rem;
   padding-bottom: 2rem;
 

@@ -1,6 +1,6 @@
 <template>
   <div :class="['input-wrapper', isFocused && '_focused', state === 'error' && '_error']" @click="inputRef?.focus?.()">
-    <span class="label">{{ label }}</span>
+    <span v-if="label" class="label">{{ label }}</span>
 
     <input
       v-model="model"
@@ -36,7 +36,6 @@ const props = withDefaults(
   }>(),
   {
     type: 'text',
-    label: 'Писать тут',
     state: 'default',
     error: 'Ообязательно для заполнения',
   }

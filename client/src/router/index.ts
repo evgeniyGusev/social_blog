@@ -24,7 +24,7 @@ const router = createRouter({
         {
           path: 'my-posts',
           name: 'my-posts',
-          component: () => import('@/pages/user/MyPostsPage.vue'),
+          component: () => import('@/pages/posts/MyPostsPage.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -75,6 +75,14 @@ const router = createRouter({
           path: 'users/:id',
           name: 'users-id',
           component: () => import('@/pages/user/UserPage.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'posts/new',
+          name: 'new-post',
+          component: () => import('@/pages/posts/NewPostPage.vue'),
           meta: {
             requiresAuth: true,
           },

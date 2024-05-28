@@ -48,3 +48,8 @@ main.main-container {
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+.p-editor-container > .p-editor-toolbar.ql-snow,
+.p-editor-container > .p-editor-content.ql-snow {
+  border: 1px solid $color-secondary;
+}

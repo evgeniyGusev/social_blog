@@ -1,5 +1,9 @@
 import { createApp } from 'vue';
 
+import PrimeVue from 'primevue/config';
+
+import 'primevue/resources/themes/aura-light-green/theme.css';
+
 import '@/assets/styles/style.scss';
 import router from '@/router';
 import setAxios from '@/lib/api';
@@ -15,4 +19,5 @@ registerGlobalComponents(app);
 registerGlobalDirectives(app);
 
 app.use(router);
+app.use(PrimeVue);
 app.mount('body');
