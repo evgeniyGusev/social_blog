@@ -148,6 +148,7 @@ withDefaults(defineProps<IUiButtonProps>(), {
   }
 
   &--rounded {
+    display: initial;
     border-radius: 100%;
     padding: 0;
 

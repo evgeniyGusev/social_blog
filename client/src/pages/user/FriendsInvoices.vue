@@ -1,29 +1,35 @@
 <template>
   <section class="friends-invoices">
-    <div class="friends-invoices-in">
-      <p class="friends-invoices-title">Входящие</p>
+    <div class="friends-invoices-buttons">
+      <ui-button
+        :template="invoicesType === 'usersIn' ? 'primary' : 'secondary'"
+        size="small"
+        @click="invoicesType = 'usersIn'"
+      >
+        Входящие
+      </ui-button>
 
-      <ui-spinner v-if="state.isInvoicesUsersLoading" width="2rem" height="2rem" />
-
-      <div v-else-if="!state.invoicesUsers?.usersIn.length" class="all-friends-empty">У вас пока нет друзей</div>
-
-      <friends-list v-else :list="state.invoicesUsers.usersIn" />
+      <ui-button
+        :template="invoicesType === 'usersOut' ? 'primary' : 'secondary'"
+        size="small"
+        @click="invoicesType = 'usersOut'"
+      >
+        Исходящие
+      </ui-button>
     </div>
 
-    <div class="friends-invoices-out">
-      <p class="friends-invoices-title">Исходящие</p>
+    <ui-spinner v-if="state.isInvoicesUsersLoading" width="2rem" height="2rem" />
 
-      <ui-spinner v-if="state.isInvoicesUsersLoading" width="5rem" height="5rem" />
-
-      <div v-else-if="!state.invoicesUsers?.usersOut.length" class="all-friends-empty">У вас пока нет друзей</div>
-
-      <friends-list v-else :list="state.invoicesUsers.usersOut" />
+    <div v-else-if="!state.invoicesUsers?.[invoicesType].length" class="friends-invoices-empty">
+      {{ invoicesType === 'usersIn' ? 'Входящие' : 'Исходящие' }} заявки отсутствуют
     </div>
+
+    <friends-list v-else :list="state.invoicesUsers?.[invoicesType]" />
   </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import { UsersStore } from '@/store/users';
 
@@ -31,23 +37,26 @@ import FriendsList from '@/components/my-friends-page/friends-list/FriendsList.v
 
 const { state, actions } = UsersStore;
 
+const invoicesType = ref<'usersIn' | 'usersOut'>('usersIn');
+
 onMounted(actions.getInvoicesUsers);
 </script>
 
 <style scoped lang="scss">
 .friends-invoices {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 2rem;
 
-  &-in,
-  &-out {
-    flex-grow: 1;
+  &-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 
-  &-title {
-    font-size: 1.5rem;
+  &-empty {
+    text-align: center;
+    font-size: 2rem;
   }
 }
 </style>
