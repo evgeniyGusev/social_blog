@@ -60,7 +60,7 @@ withDefaults(defineProps<IUiButtonProps>(), {
 
   &--disabled {
     .ui-button-text {
-      opacity: 0.3;
+      opacity: 0.7;
     }
   }
 
@@ -95,7 +95,8 @@ withDefaults(defineProps<IUiButtonProps>(), {
     }
 
     &.ui-button--disabled {
-      background-color: $color-light;
+      background-color: $color-secondary;
+      color: #fff;
       cursor: not-allowed;
     }
   }

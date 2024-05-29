@@ -14,17 +14,42 @@
 
     <div class="buttons">
       <ui-button template="secondary" @click="$router.push({ name: 'my-home' })">Отменить</ui-button>
-      <ui-button @click="console.table({ title, post })">Опубликовать</ui-button>
+      <ui-button :is-loading="isPostSaving" :disabled="isPostSaving" @click="savePost">Опубликовать</ui-button>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import UiInput from '@/components/ui/ui_input/UiInput.vue';
+
+import { PostsApi } from '@/lib/api/posts';
+import Toast from '@/components/ui/ui_toast/toast.ts';
 
 const title = ref('');
 const post = ref('');
+const isPostSaving = ref(false);
+
+async function savePost(): Promise<void> {
+  try {
+    isPostSaving.value = true;
+
+    const {
+      data: { post: id },
+    } = await PostsApi.savePost({
+      title: title.value,
+      body: post.value,
+      poster: '',
+    });
+
+    Toast.success('Пост опубликован');
+
+    console.log(id);
+  } catch (e: any) {
+    Toast.error(e);
+  } finally {
+    isPostSaving.value = false;
+  }
+}
 </script>
 
 <style scoped lang="scss">

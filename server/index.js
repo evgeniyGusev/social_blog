@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 
 import authRouter from './routes/auth.js';
 import usersRouter from './routes/users.js';
+import postsRouter from './routes/posts.js';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // api router
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/posts', postsRouter);
 
 // static files
 const staticDir = path.join(__dirname, '..', 'client', 'dist');
