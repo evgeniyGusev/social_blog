@@ -87,6 +87,14 @@ const router = createRouter({
             requiresAuth: true,
           },
         },
+        {
+          path: 'posts/:id',
+          name: 'post-id',
+          component: () => import('@/pages/posts/PostPage.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
       ],
     },
     {

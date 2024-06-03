@@ -57,14 +57,3 @@ export interface IInvoicesUsersResponse {
     };
   };
 }
-
-export interface IPost {
-  _id: string;
-  title: string;
-  body: string;
-  poster: string;
-  author: string;
-  likes: string[];
-  favs: string[];
-  comments: string[];
-}

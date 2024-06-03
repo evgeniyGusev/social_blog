@@ -65,7 +65,7 @@ const leftSideNavList = ref([
 .main-page-wrapper {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 1rem;
+  gap: 2rem;
   height: 100%;
   padding-top: 2rem;
   padding-bottom: 2rem;

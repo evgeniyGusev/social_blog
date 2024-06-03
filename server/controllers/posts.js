@@ -31,3 +31,30 @@ export const addNewPostController = async (req, res) => {
     ApiError.commonServerError(res);
   }
 };
+
+export const getUserPostsController = async (req, res) => {
+  try {
+    const { user } = await getUsersById({ id: req.userId });
+
+    let posts = await PostModel.find({ author: user._id });
+
+    if (!user) {
+      return ApiError.userNotFound(res);
+    }
+
+    if (posts.length) {
+      posts = posts.map(({ _doc: { author, __v, ...post } }) => ({
+        ...post,
+        author_name: user.name,
+      }));
+    }
+
+    return res.status(200).json({
+      success: true,
+      posts,
+    });
+  } catch (e) {
+    console.log(e);
+    ApiError.commonServerError(res);
+  }
+};
