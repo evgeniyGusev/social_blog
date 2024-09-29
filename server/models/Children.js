@@ -20,22 +20,21 @@ const ChildrenSchema = new mongoose.Schema(
       enum: ['male', 'female'],
     },
     parent: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Parent',
+      type: String,
     },
     avatar: {
       type: String,
     },
-    community: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Community',
-    },
-    payments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Payment',
-      },
-    ],
+    // community: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Community',
+    // },
+    // payments: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Payment',
+    //   },
+    // ],
     costPerMonth: {
       type: Number,
       required: true,

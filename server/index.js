@@ -7,9 +7,8 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 
-import authRouter from './routes/auth.js';
-import usersRouter from './routes/users.js';
-import postsRouter from './routes/posts.js';
+import childrenRouter from './routes/children.js';
+import communitiesRouter from './routes/communities.js';
 
 dotenv.config();
 
@@ -24,9 +23,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // api router
-app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/posts', postsRouter);
+app.use('/api/childrens', childrenRouter);
+app.use('/api/communities', communitiesRouter);
 
 // static files
 const staticDir = path.join(__dirname, '..', 'client', 'dist');

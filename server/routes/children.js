@@ -1,9 +1,13 @@
 import { Router } from 'express';
 
-import { getChildByIdController } from '../controllers/children.js';
+import {
+  createNewChild,
+  getChildByIdController,
+} from '../controllers/children.js';
 
 const childrenRouter = new Router();
 
-childrenRouter.get('/child/:id', getChildByIdController);
+childrenRouter.get('/:id', getChildByIdController);
+childrenRouter.post('/create', createNewChild);
 
 export default childrenRouter;

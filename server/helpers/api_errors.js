@@ -1,5 +1,5 @@
 export const ApiError = {
-  commonServerError(res) {
+  commonServerError(error, res) {
     return res
       .status(500)
       .json({ access: false, error: 'Произошла ошибка на сервере' });
