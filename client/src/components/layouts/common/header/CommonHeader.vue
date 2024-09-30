@@ -2,20 +2,12 @@
   <header class="header">
     <div class="main-container">
       <div class="logo">
-        <MainLogo class="main-logo" />
-
-        <h1 class="main-title">ShareSpace</h1>
       </div>
-
-      <UserHeaderState />
     </div>
   </header>
 </template>
 
-<script setup lang="ts">
-import MainLogo from '@/assets/icons/full_logo.svg?component';
-import UserHeaderState from '@/components/layouts/common/header/components/user_header_state/UserHeaderState.vue';
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .header {
@@ -30,22 +22,6 @@ import UserHeaderState from '@/components/layouts/common/header/components/user_
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      .main-logo {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
-
-      .main-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-      }
-    }
   }
 }
 </style>
