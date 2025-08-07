@@ -1,8 +1,10 @@
 <template>
   <CommonHeader />
+
   <main class="main-container">
     <slot></slot>
   </main>
+
   <CommonFooter />
 </template>
 

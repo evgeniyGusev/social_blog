@@ -2,7 +2,7 @@
   <section :class="['user-page', { 'is-user-loading': isUserLoading }]">
     <ui-spinner v-if="isUserLoading" width="5rem" height="5rem" />
 
-    <div v-else-if="!user" class="error-user">Не удалось получить пользователя</div>
+    <div v-else-if="!user" class="error-user">Не удалось загрузить пользователя</div>
 
     <UserMainInfo v-else :user="user" />
   </section>

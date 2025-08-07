@@ -21,9 +21,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { PostsApi } from '@/lib/api/posts';
 import Toast from '@/components/ui/ui_toast/toast.ts';
+
+const router = useRouter();
 
 const title = ref('');
 const post = ref('');
@@ -43,7 +46,7 @@ async function savePost(): Promise<void> {
 
     Toast.success('Пост опубликован');
 
-    console.log(id);
+    await router.push({ name: 'post-id', params: { id } });
   } catch (e: any) {
     Toast.error(e);
   } finally {

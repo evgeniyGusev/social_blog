@@ -58,3 +58,24 @@ export const getUserPostsController = async (req, res) => {
     ApiError.commonServerError(res);
   }
 };
+
+export const getPostsByIdController = async (req, res) => {
+  try {
+    console.log('req.params.id: ', req.params.id);
+
+    const post = await PostModel.findById(req.params.id);
+
+    console.log(post);
+
+    if (!post) {
+      return res.status(404).json({ access: false, error: 'Пост не найдена' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      post,
+    });
+  } catch (e) {
+    ApiError.commonServerError(res);
+  }
+};

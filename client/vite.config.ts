@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -23,4 +24,8 @@ export default defineConfig({
     },
   },
   plugins: [vue(), tsconfigPaths({ loose: true }), svgLoader()],
+  test: {
+    environment: 'happy-dom',
+    exclude: [...configDefaults.exclude, '**/tests/e2e/**'],
+  },
 });

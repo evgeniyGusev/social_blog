@@ -23,6 +23,9 @@ withDefaults(
 <style scoped lang="scss">
 .spinner_container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: v-bind(width);
   height: v-bind(height);
 }

@@ -10,7 +10,12 @@ function getUserPosts(): Promise<{ data: { success: boolean; posts: IPost[] | []
   return axios.get(`/api/posts/user_posts`);
 }
 
+function fetchPostById(id: string): Promise<{ data: { success: boolean; post: IPost } }> {
+  return axios.get(`/api/posts/${id}`);
+}
+
 export const PostsApi = {
   savePost,
   getUserPosts,
+  fetchPostById,
 };
