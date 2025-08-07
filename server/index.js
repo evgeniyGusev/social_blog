@@ -19,7 +19,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:5555',
+}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -50,7 +53,7 @@ mongoose
         return console.log(err);
       }
 
-      console.log('SERVER OK');
+      console.log('SERVER OK: http://localhost:4444');
     });
   })
   .catch((err) => {

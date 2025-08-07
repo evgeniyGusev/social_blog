@@ -21,10 +21,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import LeftSideMenuList from '@/layouts/home/components/LeftSideMenuList.vue';
-import AsideNewUsers from '@/layouts/home/components/AsideNewUsers.vue';
+import LeftSideMenuList from '@/components/layouts/home/LeftSideMenuList.vue';
+import AsideNewUsers from '@/components/layouts/home/AsideNewUsers.vue';
 
-import HouseIcon from '@/assets/icons/house.svg?component';
+// import HouseIcon from '@/assets/icons/house.svg?component';
 import ClipboardIcon from '@/assets/icons/clipboard.svg?component';
 import UsersIcon from '@/assets/icons/users.svg?component';
 import HeartIcon from '@/assets/icons/heart.svg?component';
@@ -32,11 +32,11 @@ import PlusPostIcon from '@/assets/icons/plus-rounded.svg?component';
 import SettingsIcon from '@/assets/icons/settings.svg?component';
 
 const leftSideNavList = ref([
-  {
-    title: 'Главная',
-    icon: HouseIcon,
-    link: { name: 'my-home' },
-  },
+  // {
+  //   title: 'Главная',
+  //   icon: HouseIcon,
+  //   link: { name: 'my-home' },
+  // },
   {
     title: 'Мои посты',
     icon: ClipboardIcon,

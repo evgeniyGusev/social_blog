@@ -5,7 +5,7 @@
     <hr />
 
     <ul class="my-posts-list">
-      <li v-for="post in [...posts, ...posts, ...posts, ...posts]" :key="post._id" class="my-posts-item">
+      <li v-for="post in posts" :key="post._id" class="my-posts-item">
         <post-item :post="post" />
       </li>
     </ul>
