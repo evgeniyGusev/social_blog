@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ui_button > should render correctly 1`] = `
+"<button data-v-fc7ded99="" type="button" class="ui-button ui-button--medium ui-button--primary">
+  <div data-v-fc7ded99="" class="ui-button-text"></div>
+</button>"
+`;
+
+exports[`ui_button > should render correctly with props 1`] = `
+"<button data-v-fc7ded99="" type="button" class="ui-button ui-button--small ui-button--secondary ui-button--disabled ui-button--rounded ui-button--is-loading" disabled="">
+  <div data-v-fc7ded99="" class="ui-button-text"></div>
+</button>"
+`;
+
+exports[`ui_button > should render correctly with slots 1`] = `
+"<button data-v-fc7ded99="" type="button" class="ui-button ui-button--medium ui-button--primary">
+  <div data-v-fc7ded99="" class="ui-button-text">Button</div>
+</button>"
+`;

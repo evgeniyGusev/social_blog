@@ -18,8 +18,6 @@ export const signUpController = async (req, res) => {
 
     const { email, password, name } = req.body;
 
-    console.log(req.file);
-
     let avatar = req.file?.originalname ?? req.body.avatar;
 
     if (!avatar) {

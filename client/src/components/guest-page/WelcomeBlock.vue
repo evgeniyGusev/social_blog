@@ -1,10 +1,9 @@
 <template>
   <div class="welcome-wrapper">
-    <div class="welcome-text">Добро пождаловать в <arrow-right-to-bottom-icon class="welcome-arrow-icon" /></div>
+    <div class="welcome-text">Добро пождаловать в <UIcon name="i-custom-clock" /> ИКОНКА ЛЕВЕЕ</div>
 
     <section class="welcome-main">
-      <logo-icon class="logo-icon" />
-
+      <!--      <logo-icon class="logo-icon" />-->
       <div class="main-description">
         <h1 class="welcome-title">ShareSpace</h1>
       </div>
@@ -12,10 +11,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import LogoIcon from '@/assets/icons/full_logo.svg?component';
-import ArrowRightToBottomIcon from '@/assets/icons/arrow-right-to-bottom.svg?component';
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .welcome-wrapper {

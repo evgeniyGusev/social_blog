@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ui_confirm_dialog > correct render props 1`] = `"<teleport-stub data-v-d40695e1="" data-v-3297a1c9="" to="body" class="ui-confirm-dialog" closable="false"></teleport-stub>"`;
+
+exports[`ui_confirm_dialog > should render correctly 1`] = `"<teleport-stub data-v-d40695e1="" data-v-3297a1c9="" to="body" class="ui-confirm-dialog" closable="false"></teleport-stub>"`;

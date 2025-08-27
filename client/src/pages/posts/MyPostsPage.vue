@@ -50,10 +50,6 @@ onMounted(getPosts);
     font-size: 2rem;
   }
 
-  hr {
-    margin: 1rem 0 2rem;
-  }
-
   &-list {
     display: flex;
     flex-direction: column;

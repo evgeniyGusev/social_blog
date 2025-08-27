@@ -54,18 +54,39 @@ export const getUserPostsController = async (req, res) => {
       posts,
     });
   } catch (e) {
-    console.log(e);
+    ApiError.commonServerError(res);
+  }
+};
+
+export const getPostsByUserIdController = async (req, res) => {
+  try {
+    const { user } = await getUsersById({ id: req.query.user_id });
+
+    if (!user) {
+      return ApiError.userNotFound(res);
+    }
+
+    let posts = await PostModel.find({ author: user._id });
+
+    if (posts.length) {
+      posts = posts.map(({ _doc: { author, __v, ...post } }) => ({
+        ...post,
+        author_name: user.name,
+      }));
+    }
+
+    return res.status(200).json({
+      success: true,
+      posts,
+    });
+  } catch (e) {
     ApiError.commonServerError(res);
   }
 };
 
 export const getPostsByIdController = async (req, res) => {
   try {
-    console.log('req.params.id: ', req.params.id);
-
     const post = await PostModel.findById(req.params.id);
-
-    console.log(post);
 
     if (!post) {
       return res.status(404).json({ access: false, error: 'Пост не найдена' });

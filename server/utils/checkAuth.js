@@ -12,8 +12,6 @@ export default function checkAuth(req, res, next) {
     [, token] = accessCookie.split('=');
   }
 
-  console.log('token: ', token);
-
   if (!token) {
     return res.status(401).json({ access: false });
   }
