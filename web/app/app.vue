@@ -9,7 +9,11 @@
 </template>
 
 <script setup lang="ts">
-type LayoutName = 'common';
+import { useCurrentUserStore } from './store/current_user';
 
-const name = ref<LayoutName>('common');
+type LayoutName = 'common' | 'home';
+
+const userStore = useCurrentUserStore();
+
+const name = ref<LayoutName>(userStore.currentUser ? 'home' : 'common');
 </script>
