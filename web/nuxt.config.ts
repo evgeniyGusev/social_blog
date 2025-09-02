@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   srcDir: 'app/',
   compatibilityDate: '2024-07-15',
   devtools: { enabled: true },
-  debug: true,
   modules: ['@nuxt/eslint', '@nuxt/test-utils', '@nuxt/ui', '@pinia/nuxt'],
   devServer: { port: 3332 },
   ssr: true,

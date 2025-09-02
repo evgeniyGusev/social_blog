@@ -15,13 +15,7 @@ type LayoutName = 'common' | 'home';
 
 const userStore = useCurrentUserStore();
 
-console.log(userStore);
-
 const name = computed<LayoutName>(() => {
   return userStore.currentUser ? 'home' : 'common';
 });
-
-onMounted(() => {
-  console.log(userStore);
-})
 </script>

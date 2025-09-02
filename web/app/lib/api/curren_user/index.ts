@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { ICurrentUserResponse } from '@/interfaces/common_interfaces';
 
 function fetchCurrentUser(): Promise<ICurrentUserResponse> {
-  return axios.get('/api/auth/current_user');
+  return $fetch('/api/auth/current_user');
 }
 
 function addUserToFriends(id: string | string[]): Promise<ICurrentUserResponse> {

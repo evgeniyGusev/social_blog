@@ -8,7 +8,7 @@ export interface ICurrentUser {
   invoices?: {
     in: string[];
     out: string[];
-  };
+  } | null | undefined;
   createdAt: string;
   updatedAt: string;
   __v?: number;
