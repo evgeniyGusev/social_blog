@@ -3,7 +3,7 @@
     <ui-confirm-dialog ref="dialog" :loading="isLogouLoading">
       <template #header> Выход </template>
 
-      Вы действительно хотите выйти?
+      Вы действительно хотите выйти?
     </ui-confirm-dialog>
 
     <ui-dialog v-model="isModalOpen">
@@ -26,7 +26,7 @@
         :src="getImage(userStore.currentUser.avatar)"
         :alt="userStore.currentUser.name"
         class="user-avatar"
-      />
+      >
 
       <ui-button
         rounded
@@ -42,10 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { useCurrentUserStore } from '@/store/current_user/';
+import { useCurrentUserStore } from '~/stores/current_user/';
 
 import { AuthApi } from '@/lib/api/auth';
 import { getImage } from '@/helpers/get_image';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {
+import type {
   ISignUpPayload,
   ISignUpResponse,
   ISignInPayload,

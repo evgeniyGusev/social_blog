@@ -7,6 +7,7 @@ import Toast from '@/components/ui/ui_toast/toast';
 import type { ICurrentUserState } from './interfaces';
 import type { ICurrentUser } from '@/interfaces/common_interfaces';
 
+const BASE_URL = '/api/auth';
 
 export const useCurrentUserStore = defineStore('currentUser', {
   state: (): ICurrentUserState => ({
@@ -26,16 +27,19 @@ export const useCurrentUserStore = defineStore('currentUser', {
 
     async getCurrentUser(): Promise<void> {
       try {
-        this.isUserLoading = true;
+        const data = await $fetch(`${BASE_URL}/current_user`, {
+          method: 'GET',
+          credentials: 'include'
+        })
 
-        const { data } = await CurrentUserApi.fetchCurrentUser();
-
-        this.currentUser = data.user;
-
-        this.isUserLoading = false;
-      } catch (e: any) {
-        this.isUserLoading = false;
-        throw Error(e);
+        if (data?.access) {
+          this.currentUser = data.user
+        } else {
+          this.currentUser = null
+        }
+      } catch (error) {
+        console.log('Error fetching current user:', error)
+        this.currentUser = null
       }
     },
 

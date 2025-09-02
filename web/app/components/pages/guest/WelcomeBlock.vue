@@ -14,7 +14,7 @@
 
 <style scoped lang="scss">
 .welcome-wrapper {
-  height: calc(100vh - 75px);
+  height: calc(100vh - 70px); /* temporary change to check overlap */
   display: flex;
   flex-direction: column;
   justify-content: center;

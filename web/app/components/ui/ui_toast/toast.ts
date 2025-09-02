@@ -7,6 +7,9 @@ function error(message: string) {
 }
 
 function show(type: string, message: string) {
+  // Проверяем, что мы в браузере
+  if (typeof document === 'undefined') return;
+  
   const body = document.body;
 
   if (body && !body.contains(document.querySelector('.uiToastBlock'))) {

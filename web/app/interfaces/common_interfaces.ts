@@ -2,10 +2,10 @@ export interface ICurrentUser {
   _id: string;
   name: string;
   email: string;
-  avatar: string;
+  avatar?: string | null | undefined;
   favs: string[];
   friends: string[];
-  invoices: {
+  invoices?: {
     in: string[];
     out: string[];
   };

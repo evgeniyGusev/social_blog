@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 let isConnected = false;
 
-export const connectToDB = async () => {
+export default defineEventHandler(async () => {
   if (isConnected) return
 
   try {
@@ -14,4 +14,4 @@ export const connectToDB = async () => {
   } catch (err) {
     console.error('❌ MongoDB connection error:', err)
   }
-}
+})

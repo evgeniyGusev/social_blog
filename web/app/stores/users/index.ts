@@ -2,7 +2,7 @@ import { reactive } from 'vue';
 
 import { UsersApi } from '@/lib/api/users/index.ts';
 
-import { IUsersState } from '@/store/users/interface.ts';
+import { IUsersState } from '~/stores/users/interface.ts';
 
 import Toast from '@/components/ui/ui_toast/toast.ts';
 
